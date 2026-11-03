@@ -199,6 +199,16 @@ td{font-variant-numeric:tabular-nums}
 .steps2 b{display:block;font-family:var(--display);font-size:16px}
 .steps2 span{color:var(--muted)}
 @media (max-width:760px){.filmgrid{grid-template-columns:1fr}}
+/* filming checklist */
+.shoot{margin-top:44px;border:1px solid var(--line);border-radius:12px;padding:28px;background:var(--bg)}
+.shoot h4{font-family:var(--display);font-weight:900;font-style:italic;font-size:22px;margin:0 0 18px;text-transform:uppercase;letter-spacing:.01em}
+.shootlist{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 32px}
+.shootlist li{display:grid;grid-template-columns:26px 1fr;gap:10px;font-size:15px;min-width:0}
+.shootlist li::before{content:"\2713";color:var(--red);font-weight:900;font-size:18px;line-height:1.2}
+.shootlist b{display:block;font-family:var(--display);font-size:16px}
+.shootlist span{color:var(--muted)}
+.shoot .note{margin:22px 0 0}
+@media (max-width:760px){.shootlist{grid-template-columns:1fr}.shoot{padding:20px}}
 
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px 36px}
 .cols>ul{min-width:0}
@@ -407,10 +417,24 @@ footer{padding-block:28px;color:var(--muted);font-size:13px}
             <p class="note" data-r>Every breakdown includes the 2 or 3 biggest fixes, a cue for each, and a drill to practice it.</p>
           </div>
           <ol class="steps2" data-stagger>
-            <li><div><b>Film from the side</b><span>Full body in frame, phone at hip height, slow motion if you have it.</span></div></li>
+            <li><div><b>Film it right</b><span>Full body in frame, from the side, steady phone. Follow the checklist below.</span></div></li>
             <li><div><b>Send it in</b><span>DM the clips to @programmed4speed or email them, with your sport and event.</span></div></li>
             <li><div><b>Get your breakdown</b><span>A written analysis within 48 hours, with fixes to use at your next practice.</span></div></li>
           </ol>
+        </div>
+        <div class="shoot" id="filming" data-r>
+          <h4>How to film a clip I can break down</h4>
+          <ul class="shootlist" data-stagger>
+            <li><div><b>Full body, head to toe</b><span>Keep your whole body in frame for the entire rep, feet included. Don't zoom in or crop.</span></div></li>
+            <li><div><b>Side view, from a distance</b><span>Film from the side, square to your lane, about 10 to 15 yards away. For starts, add a second clip from behind.</span></div></li>
+            <li><div><b>Phone steady and sideways</b><span>Film horizontal at hip height. Use a tripod or prop the phone on something. If a friend films, they should pan smoothly with you.</span></div></li>
+            <li><div><b>Slow motion if you can</b><span>120 or 240 fps is best, 60 fps works. No filters, speed edits, or music over the clip.</span></div></li>
+            <li><div><b>Good light</b><span>Film in daylight or on a well-lit track, and don't shoot into the sun.</span></div></li>
+            <li><div><b>Fitted clothes</b><span>Wear fitted clothes in a color that stands out from the background, so your hips, knees, and ankles are easy to see.</span></div></li>
+            <li><div><b>Send the original video</b><span>Upload the file from your camera roll, not a screen recording or a story repost, so it stays sharp.</span></div></li>
+            <li><div><b>Tell me the context</b><span>Your sport, event, what the drill or rep is, your current PR, any injuries, and what you want me to look at.</span></div></li>
+          </ul>
+          <p class="note">Send 2 or 3 reps of the same thing when you can. Seeing the pattern repeat makes the breakdown more accurate.</p>
         </div>
       </section>
     </div>
