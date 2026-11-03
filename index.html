@@ -64,6 +64,9 @@ a{color:inherit}
 .loc{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:999px}
 .loc::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.offer{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;border:2px solid var(--red);border-radius:6px;padding:16px 18px;background:color-mix(in srgb,var(--red) 12%,transparent);max-width:720px}
+.offer b{font-family:var(--display);font-weight:900;font-style:italic;font-size:30px;color:var(--red-ink);line-height:1;white-space:nowrap}
+.offer span{font-size:15px;line-height:1.45;flex:1 1 260px;min-width:0}
 .btn{font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:14px 20px;border-radius:4px;border:2px solid var(--red);background:var(--red);color:#fff;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
 .btn:hover{filter:brightness(1.08)}
@@ -202,8 +205,9 @@ footer{padding-block:28px;color:var(--muted);font-size:13px}
     <h1 class="wordmark">Programmed<b>4</b>Speed</h1>
     <p class="tagline">Sprint programs &middot; Built by a sprinter</p>
     <h2>Get faster in 3, 5, or 7 weeks.</h2>
-    <p class="lead">Personalized sprint programs written by a current college sprinter, built around your event, your PRs, and your schedule. For track athletes and anyone whose sport rewards speed.</p>
-    <span class="loc">Based in Tampa, Florida &middot; Weekend in-person sessions</span>
+    <p class="lead">Personalized online sprint programs written by a current college sprinter, built around your event, your PRs, and your schedule. For athletes anywhere, in any sport that rewards speed.</p>
+    <span class="loc">Online for athletes anywhere &middot; In-person sessions in Tampa, FL</span>
+    <div class="offer"><b>25% OFF</b><span><strong>Launch offer:</strong> the first 3 athletes to sign up get 25% off any program. DM &ldquo;SPEED&rdquo; to @programmed4speed on Instagram or email us to claim it.</span></div>
     <div class="hero-actions">
       <a class="btn" href="#programs">See the programs</a>
       <a class="btn ghost" href="#tampa">Train in person</a>
@@ -222,7 +226,7 @@ footer{padding-block:28px;color:var(--muted);font-size:13px}
     <section id="programs">
       <p class="eyebrow">Programs</p>
       <h3 class="title">Choose your program</h3>
-      <p class="intro">Every program is written for you after you complete the intake form. You get a full week-by-week plan, not a generic template. Longer programs cost less per week.</p>
+      <p class="intro">Every program is written for you after you complete the intake form. You get a full week-by-week plan, not a generic template. Longer programs cost less per week, and the first 3 athletes get 25% off any program.</p>
       <div class="plans">
         <article class="plan reveal">
           <span class="tag">Short block</span>
@@ -422,7 +426,7 @@ footer{padding-block:28px;color:var(--muted);font-size:13px}
   <div class="finish" id="start">
     <div class="wrap">
       <h3>Ready to get faster?</h3>
-      <p>Email the program you want and you will get the intake form and payment link. For in-person sessions, include which weekend day works for you.</p>
+      <p>DM &ldquo;SPEED&rdquo; to @programmed4speed on Instagram or email the program you want, and you will get the intake form and payment link. The first 3 athletes get 25% off. For in-person sessions in Tampa, include which weekend day works for you.</p>
       <div class="mailrow">
         <span class="mail" id="mail">programmed4speed@gmail.com</span>
         <button class="copy" id="copyBtn" type="button">Copy email</button>
