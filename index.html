@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Programmed4Speed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,800;1,900&family=Lato:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+html,body{margin:0}
+
+/* Layout: a single track lane. Sections run down the page like splits on a 100m straight; a fixed lane bar at the top fills as you scroll. */
+:root{
+  --bg:#0c0c0f;        /* track at night */
+  --surface:#16161b;   /* card / panel */
+  --line:#2a2a31;      /* lane line */
+  --fg:#f4f4f6;
+  --muted:#a3a3ad;
+  --red:#e11d2a;       /* brand red */
+  --red-ink:#ff4a55;   /* red for small text on dark */
+  --display:"Montserrat",system-ui,"Segoe UI",Arial,sans-serif;
+  --body:"Lato",system-ui,"Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red-ink);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* lane progress bar */
+.lane{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.lane .wrap{display:flex;align-items:center;gap:16px;padding-block:10px}
+.mark{font-family:var(--display);font-weight:900;font-style:italic;font-size:15px;letter-spacing:.02em;white-space:nowrap;text-decoration:none}
+.mark b{color:var(--red)}
+.track{flex:1;min-width:0;position:relative;height:18px}
+.track::before{content:"";position:absolute;left:0;right:0;top:8px;height:2px;background:var(--line)}
+.fill{position:absolute;left:0;top:8px;height:2px;width:100%;background:var(--red);transform-origin:left;transform:scaleX(0)}
+.ticks{position:absolute;inset:0;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--muted);pointer-events:none}
+.ticks span{transform:translateY(12px)}
+.navcta{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;background:var(--red);color:#fff;padding:8px 12px;border-radius:4px;white-space:nowrap}
+@supports (animation-timeline: scroll()){
+  .fill{animation:run linear both;animation-timeline:scroll(root)}
+  @keyframes run{to{transform:scaleX(1)}}
+}
+@media (max-width:560px){.ticks{display:none}}
+
+/* hero */
+.hero{padding-block:64px 48px;position:relative;overflow:hidden}
+.speed{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.speed i{display:block;height:10px;background:var(--red);transform:skewX(-22deg);animation:dash .9s cubic-bezier(.2,.8,.2,1) both}
+.speed i:nth-child(1){width:96px;margin-left:24px}
+.speed i:nth-child(2){width:140px;animation-delay:.08s}
+.speed i:nth-child(3){width:88px;margin-left:36px;animation-delay:.16s}
+@keyframes dash{from{transform:skewX(-22deg) translateX(-60px)}to{transform:skewX(-22deg) translateX(0)}}
+.wordmark{font-family:var(--display);font-weight:900;font-style:italic;font-size:clamp(34px,8.4vw,88px);line-height:.92;letter-spacing:-.01em;margin:0;text-transform:uppercase;overflow-wrap:anywhere}
+.wordmark b{color:var(--red)}
+.tagline{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
+.hero h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,4vw,38px);line-height:1.1;margin:40px 0 12px;text-wrap:balance;max-width:20ch}
+.hero p.lead{color:var(--muted);font-size:18px;max-width:58ch;margin:0}
+.loc{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+.loc::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:14px 20px;border-radius:4px;border:2px solid var(--red);background:var(--red);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn:hover{filter:brightness(1.08)}
+
+/* stats as split times */
+.splits{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.split{padding:22px 16px;border-left:1px solid var(--line);min-width:0}
+.split:first-child{border-left:none}
+.split .v{font-family:var(--display);font-weight:900;font-style:italic;font-size:clamp(26px,5vw,42px);color:var(--red);line-height:1}
+.split .k{font-size:13px;color:var(--muted);margin-top:6px}
+@media (max-width:560px){.splits{grid-template-columns:1fr}.split{border-left:none;border-top:1px solid var(--line)}.split:first-child{border-top:none}}
+
+/* sections */
+section{padding-block:72px 8px}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-ink);margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:"";height:1px;width:48px;background:var(--red)}
+h3.title{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.4vw,44px);line-height:1.05;margin:0 0 14px;text-wrap:balance}
+.intro{color:var(--muted);max-width:62ch;margin:0 0 32px}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:26px 22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.plan.pop{background:var(--red);border-color:var(--red)}
+.plan .tag{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-ink)}
+.plan.pop .tag{color:#fff}
+.plan h4{font-family:var(--display);font-weight:800;font-size:22px;margin:0}
+.price{font-family:var(--display);font-weight:900;font-style:italic;font-size:52px;line-height:1}
+.pw{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.plan.pop .pw,.plan.pop .best,.plan.pop li{color:#fff}
+.best{font-size:14px;color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:8px}
+.plan li{font-size:15px;padding-left:22px;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:3px;background:var(--red);transform:skewX(-22deg)}
+.plan.pop li::before{background:#fff}
+@media (max-width:820px){.plans{grid-template-columns:1fr}}
+
+/* program details */
+.details{display:grid;gap:16px}
+.detail{display:grid;grid-template-columns:200px 1fr 1fr;gap:24px;padding:24px 0;border-top:1px solid var(--line)}
+.detail:last-child{border-bottom:1px solid var(--line)}
+.detail h4{font-family:var(--display);font-weight:800;font-size:20px;margin:0}
+.detail .dp{font-family:var(--display);font-weight:900;font-style:italic;color:var(--red);font-size:28px;margin-top:4px}
+.detail .dbest{color:var(--muted);font-size:14px;margin-top:8px}
+.detail h5{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.detail ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.detail>div{min-width:0}
+@media (max-width:820px){.detail{grid-template-columns:1fr;gap:14px}}
+
+/* compare */
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{padding:12px 14px;text-align:center;border-bottom:1px solid var(--line)}
+th{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:var(--surface)}
+td:first-child,th:first-child{text-align:left;font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+td.hi,th.hi{background:color-mix(in srgb,var(--red) 14%,transparent)}
+.yes{color:var(--red-ink);font-weight:700}
+.no{color:var(--muted)}
+td{font-variant-numeric:tabular-nums}
+
+/* tampa */
+.tampa{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:72px}
+.tampa section{padding-block:56px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.fact{border-left:3px solid var(--red);padding:4px 0 4px 16px;min-width:0}
+.fact .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-ink)}
+.fact .v{font-family:var(--display);font-weight:800;font-size:22px;margin-top:4px}
+.fact .s{color:var(--muted);font-size:14px}
+@media (max-width:700px){.facts{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.cols>div{min-width:0}
+@media (max-width:700px){.cols{grid-template-columns:1fr}}
+.list{margin:0;padding-left:18px;display:grid;gap:8px}
+
+/* add-ons */
+.addons{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.addon{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;min-width:0}
+.addon h4{font-family:var(--display);font-weight:800;font-size:17px;margin:0}
+.addon .ap{font-family:var(--mono);font-weight:700;color:var(--red-ink);white-space:nowrap}
+.addon p{grid-column:1/-1;margin:0;color:var(--muted);font-size:14px}
+@media (max-width:640px){.addons{grid-template-columns:1fr}}
+.groups{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px}
+.chip b{color:var(--red-ink)}
+
+/* steps (a real sequence) */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s;border-top:1px solid var(--line)}
+.steps li{counter-increment:s;padding:20px 18px 20px 0;border-bottom:1px solid var(--line);min-width:0}
+.steps li::before{content:"0" counter(s);display:block;font-family:var(--mono);font-weight:700;color:var(--red-ink);font-size:13px;margin-bottom:6px}
+@media (max-width:700px){.steps{grid-template-columns:1fr}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 40px}
+.faq h4{font-family:var(--display);font-weight:800;font-size:17px;margin:0 0 6px}
+.faq p{margin:0;color:var(--muted)}
+.faq>div{min-width:0}
+@media (max-width:700px){.faq{grid-template-columns:1fr}}
+.fine{color:var(--muted);font-size:14px}
+
+/* finish line */
+.finish{margin-top:80px;background:var(--red);color:#fff}
+.finish .wrap{padding-block:56px;display:grid;gap:16px}
+.finish h3{font-family:var(--display);font-weight:900;font-style:italic;font-size:clamp(32px,6vw,60px);line-height:1;margin:0;text-transform:uppercase}
+.mailrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.mail{font-family:var(--mono);font-size:clamp(15px,3.4vw,20px);font-weight:700;background:rgba(0,0,0,.2);padding:10px 14px;border-radius:4px;user-select:all;overflow-wrap:anywhere}
+.copy{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:#0c0c0f;color:#fff;border:none;border-radius:4px;padding:12px 16px;cursor:pointer}
+.finish p{margin:0;max-width:60ch}
+footer{padding-block:28px;color:var(--muted);font-size:13px}
+
+/* scroll reveal: resting state is fully visible; motion only where scroll timelines are supported */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+    @keyframes rise{from{opacity:.15;transform:translateY(36px)}to{opacity:1;transform:none}}
+  }
+}
+@media (prefers-reduced-motion: reduce){.speed i{animation:none}.fill{animation:none}}
+</style>
+
+</head>
+<body>
+<header class="lane" aria-label="Page progress">
+  <div class="wrap">
+    <a class="mark" href="#top">PROGRAMMED<b>4</b>SPEED</a>
+    <div class="track" aria-hidden="true">
+      <div class="fill"></div>
+      <div class="ticks"><span>0m</span><span>10m</span><span>30m</span><span>60m</span><span>100m</span></div>
+    </div>
+    <a class="navcta" href="#start">Get started</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="speed" aria-hidden="true"><i></i><i></i><i></i></div>
+    <h1 class="wordmark">Programmed<b>4</b>Speed</h1>
+    <p class="tagline">Sprint programs &middot; Built by a sprinter</p>
+    <h2>Get faster in 3, 5, or 7 weeks.</h2>
+    <p class="lead">Personalized sprint programs written by a current college sprinter, built around your event, your PRs, and your schedule. For track athletes and anyone whose sport rewards speed.</p>
+    <span class="loc">Based in Tampa, Florida &middot; Weekend in-person sessions</span>
+    <div class="hero-actions">
+      <a class="btn" href="#programs">See the programs</a>
+      <a class="btn ghost" href="#tampa">Train in person</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="splits">
+      <div class="split"><div class="v">3</div><div class="k">programs to choose from</div></div>
+      <div class="split"><div class="v">48 hrs</div><div class="k">to get your custom plan</div></div>
+      <div class="split"><div class="v">100%</div><div class="k">written for you, not a template</div></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="programs">
+      <p class="eyebrow">Programs</p>
+      <h3 class="title">Choose your program</h3>
+      <p class="intro">Every program is written for you after you complete the intake form. You get a full week-by-week plan, not a generic template. Longer programs cost less per week.</p>
+      <div class="plans">
+        <article class="plan reveal">
+          <span class="tag">Short block</span>
+          <h4>3-Week Jumpstart</h4>
+          <div class="price">$45</div>
+          <div class="pw">$15.00 per week</div>
+          <div class="best">Best for a meet or tryout coming up soon</div>
+          <ul><li>Acceleration and starts</li><li>Sprint drills</li><li>Pre-meet taper</li></ul>
+        </article>
+        <article class="plan pop reveal">
+          <span class="tag">Most popular</span>
+          <h4>5-Week Builder</h4>
+          <div class="price">$69</div>
+          <div class="pw">$13.80 per week</div>
+          <div class="best">Best for off-season or early-season gains</div>
+          <ul><li>Everything in Jumpstart</li><li>Max velocity work</li><li>Plyometrics and strength</li><li>1 mid-program check-in</li></ul>
+        </article>
+        <article class="plan reveal">
+          <span class="tag">Full block</span>
+          <h4>7-Week Full Speed</h4>
+          <div class="price">$89</div>
+          <div class="pw">$12.70 per week</div>
+          <div class="best">Best for peaking for a target race</div>
+          <ul><li>Everything in Builder</li><li>Speed endurance</li><li>Full strength progression</li><li>Weekly check-ins</li><li>Race-week taper</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">The details</p>
+      <h3 class="title">Inside each program</h3>
+      <div class="details">
+        <div class="detail reveal">
+          <div><h4>3-Week Speed Jumpstart</h4><div class="dp">$45</div><div class="dbest">For athletes with a meet, tryout, or combine coming up who need a short, focused block.</div></div>
+          <div><h5>What you get</h5><ul><li>Acceleration and start mechanics, including block or 3-point starts</li><li>Sprint drills to clean up posture and arm action</li><li>A pre-meet taper in the final week</li><li>Start and finish speed testing</li></ul></div>
+          <div><h5>Why it works</h5><ul><li>Faster first 10 to 30 meters, where most short races are won</li><li>Better technique without adding a heavy training load</li><li>You show up rested and sharp instead of tired</li></ul></div>
+        </div>
+        <div class="detail reveal">
+          <div><h4>5-Week Speed Builder</h4><div class="dp">$69</div><div class="dbest">For athletes in the off-season or early season who want noticeable improvement.</div></div>
+          <div><h5>What you get</h5><ul><li>Everything in the Jumpstart</li><li>Max velocity work: flying sprints and top-end mechanics</li><li>Plyometrics and a strength routine (gym or bodyweight versions)</li><li>One mid-program check-in with plan adjustments</li></ul></div>
+          <div><h5>Why it works</h5><ul><li>Improves both acceleration and top speed</li><li>Builds the power that carries into every sprint event</li><li>Enough time to see measurable changes in your testing numbers</li></ul></div>
+        </div>
+        <div class="detail reveal">
+          <div><h4>7-Week Full Speed Program</h4><div class="dp">$89</div><div class="dbest">For serious athletes who want a complete block leading into the season or a target race.</div></div>
+          <div><h5>What you get</h5><ul><li>Everything in the Speed Builder</li><li>Speed endurance for the 200m and 400m, or late-race speed for the 100m</li><li>A full strength and power progression</li><li>Weekly check-ins with plan adjustments</li><li>A race-week plan and taper for your target meet</li></ul></div>
+          <div><h5>Why it works</h5><ul><li>Covers acceleration, top speed, and holding speed at the end of races</li><li>Weekly feedback catches problems early</li><li>Peaks you for the meet that matters most</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Side by side</p>
+      <h3 class="title">Compare the programs</h3>
+      <div class="tablebox reveal">
+        <table>
+          <thead><tr><th></th><th>Jumpstart</th><th class="hi">Builder</th><th>Full Speed</th></tr></thead>
+          <tbody>
+            <tr><td>Price</td><td>$45</td><td class="hi">$69</td><td>$89</td></tr>
+            <tr><td>Price per week</td><td>$15.00</td><td class="hi">$13.80</td><td>$12.70</td></tr>
+            <tr><td>Acceleration and starts</td><td class="yes">Yes</td><td class="hi yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><td>Max velocity work</td><td class="no">No</td><td class="hi yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><td>Speed endurance</td><td class="no">No</td><td class="hi no">No</td><td class="yes">Yes</td></tr>
+            <tr><td>Strength and plyometrics</td><td class="no">No</td><td class="hi">Basic</td><td>Full progression</td></tr>
+            <tr><td>Check-ins</td><td class="no">None</td><td class="hi">1</td><td>Weekly</td></tr>
+            <tr><td>Race-week taper</td><td>Short</td><td class="hi no">No</td><td class="yes">Yes</td></tr>
+            <tr><td>Speed testing</td><td>Start and end</td><td class="hi">Start and end</td><td>Start, middle, end</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Included</p>
+      <h3 class="title">What every program includes</h3>
+      <div class="cols reveal">
+        <ul class="list">
+          <li>A plan written for your event, PRs, experience, and training days</li>
+          <li>A dynamic warm-up and mobility routine for every session</li>
+          <li>Speed testing (10m acceleration, 30m fly, standing broad jump) to track progress</li>
+        </ul>
+        <ul class="list">
+          <li>A recovery guide covering sleep, hydration, and rest days</li>
+          <li>A progress tracker for your times and sessions</li>
+          <li>Email support for questions about your plan</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="tampa" id="tampa">
+    <div class="wrap">
+      <section>
+        <p class="eyebrow">In person</p>
+        <h3 class="title">Train in person in Tampa</h3>
+        <p class="intro">Programmed4Speed is based in Tampa, Florida. If you live in the area, you can add weekly in-person sessions to any program and get coached live on the track.</p>
+        <div class="facts reveal">
+          <div class="fact"><div class="k">When</div><div class="v">Once a week</div><div class="s">Saturday or Sunday</div></div>
+          <div class="fact"><div class="k">Where</div><div class="v">Tampa area</div><div class="s">Track location confirmed when you book</div></div>
+          <div class="fact"><div class="k">Price</div><div class="v">$40 private</div><div class="s">$25 per athlete in groups of 2 to 4</div></div>
+        </div>
+        <div class="cols reveal">
+          <div>
+            <h5 class="eyebrow" style="margin-bottom:12px">What we work on</h5>
+            <ul class="list">
+              <li>Starts and acceleration with live feedback on every rep</li>
+              <li>Sprint mechanics: posture, arm action, and foot contact</li>
+              <li>The key workout from that week of your program</li>
+              <li>Video of your reps so you can see what changed</li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="eyebrow" style="margin-bottom:12px">Booking</h5>
+            <p style="margin:0;color:var(--muted)">Spots are limited each weekend. Email programmed4speed@gmail.com to book, and include which day works for you.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section>
+      <p class="eyebrow">Extras</p>
+      <h3 class="title">Add-ons</h3>
+      <div class="addons">
+        <div class="addon reveal"><h4>Race-day prep plan</h4><span class="ap">$15</span><p>Warm-up timing, meals, and a mental routine for one meet</p></div>
+        <div class="addon reveal"><h4>Form video breakdown</h4><span class="ap">$20 / video</span><p>Written feedback on your sprint mechanics</p></div>
+        <div class="addon reveal"><h4>1-on-1 coaching call</h4><span class="ap">$25</span><p>20-minute video call on your plan, form, or race strategy</p></div>
+        <div class="addon reveal"><h4>Extra week</h4><span class="ap">$12</span><p>Add a week to any program</p></div>
+      </div>
+      <h4 style="font-family:var(--display);font-weight:800;font-size:20px;margin:40px 0 0">Group pricing</h4>
+      <p class="intro" style="margin:6px 0 0">Train with your teammates and save.</p>
+      <div class="groups">
+        <span class="chip">3 to 5 athletes: <b>15% off</b> each program</span>
+        <span class="chip">6 or more: <b>20% off</b> each program</span>
+        <span class="chip">Coaches: email for a full team quote</span>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Process</p>
+      <h3 class="title">How it works</h3>
+      <ol class="steps reveal">
+        <li>Pick a program and any add-ons.</li>
+        <li>Pay and fill out the intake form.</li>
+        <li>Receive your personalized plan within 48 hours.</li>
+        <li>Do your starting speed test and begin week 1.</li>
+        <li>Send check-ins and questions by email as you go.</li>
+        <li>Retest at the end and see how much faster you got.</li>
+      </ol>
+    </section>
+
+    <section>
+      <p class="eyebrow">Before you start</p>
+      <h3 class="title">Intake checklist</h3>
+      <p class="intro">Have this information ready before you fill out the intake form.</p>
+      <div class="cols reveal">
+        <ul class="list">
+          <li>Your age, grade, and main events</li>
+          <li>Current PRs and the meets where you ran them</li>
+          <li>How many years you have been sprinting</li>
+          <li>Days per week and time per session you can train</li>
+        </ul>
+        <ul class="list">
+          <li>Access to a track, gym, or hills</li>
+          <li>Current or past injuries</li>
+          <li>Your target meet and its date</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Questions</p>
+      <h3 class="title">FAQ</h3>
+      <div class="faq reveal">
+        <div><h4>Do I need a gym?</h4><p>No. Every strength session has a bodyweight version you can do at home or on the track.</p></div>
+        <div><h4>Can I follow this during my school season?</h4><p>Yes. Put your team practice schedule on the intake form and the plan will be written around it so you are not overtraining.</p></div>
+        <div><h4>Which program should I pick?</h4><p>If your meet is less than a month away, pick the Jumpstart. The 5-Week Builder fits most athletes, and the 7-Week program is for peaking for a big race.</p></div>
+        <div><h4>Can I upgrade later?</h4><p>Yes. Upgrade to a longer program and pay only the difference.</p></div>
+        <div><h4>Is this for beginners?</h4><p>Yes. Plans match your experience level, from first-year athletes to experienced sprinters.</p></div>
+        <div><h4>I play football or soccer. Is this for me?</h4><p>Yes. Acceleration and top speed carry straight into any sport, and the plan is written around your season.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">The fine print</p>
+      <h3 class="title">Policies</h3>
+      <ul class="list fine reveal">
+        <li>Payment is due before your plan is written.</li>
+        <li>Plans are delivered within 48 hours of your completed intake form.</li>
+        <li>Refunds are available before your plan is delivered. After delivery, programs are non-refundable, but you can request changes to fit your schedule.</li>
+        <li>Athletes under 18 need a parent or guardian to approve the purchase and the plan.</li>
+        <li>Talk to a doctor before starting a new training program, especially with an injury or medical condition. Stop any exercise that causes pain.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="finish" id="start">
+    <div class="wrap">
+      <h3>Ready to get faster?</h3>
+      <p>Email the program you want and you will get the intake form and payment link. For in-person sessions, include which weekend day works for you.</p>
+      <div class="mailrow">
+        <span class="mail" id="mail">programmed4speed@gmail.com</span>
+        <button class="copy" id="copyBtn" type="button">Copy email</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Programmed4Speed &middot; Tampa, Florida</div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('copyBtn');
+  var mail=document.getElementById('mail');
+  btn.addEventListener('click',function(){
+    var t=mail.textContent.trim();
+    function selectIt(){var r=document.createRange();r.selectNodeContents(mail);var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press copy';}
+    try{
+      navigator.clipboard.writeText(t).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy email';},1800);},selectIt);
+    }catch(e){selectIt();}
+  });
+})();
+</script>
+
+</body>
+</html>
