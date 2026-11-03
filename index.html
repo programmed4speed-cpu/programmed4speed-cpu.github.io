@@ -296,18 +296,9 @@ footer{padding-block:28px;color:var(--muted);font-size:13px}
 .fsmall a,.fsmall button{color:var(--red-ink);background:none;border:0;font:inherit;padding:0;cursor:pointer;text-decoration:underline}
 body.flock{overflow:hidden}
 
-/* payment */
-.paygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.paycard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.paycard .pn{font-family:var(--display);font-weight:800;font-size:17px}
-.paycard .pp{font-family:var(--display);font-weight:900;font-style:italic;font-size:40px;line-height:1}
-.vbtn{display:block;text-align:center;margin-top:auto;background:#008CFF;border-color:#008CFF}
-.vbtn:hover{box-shadow:0 10px 26px -10px rgba(0,140,255,.85)}
-.paynote{font-size:14px;color:var(--muted);margin:18px 0 0}
-.paynote b{color:var(--fg)}
-.steps a{color:var(--red-ink)}
-@media (max-width:760px){.paygrid{grid-template-columns:1fr 1fr}}
-@media (max-width:440px){.paygrid{grid-template-columns:1fr}}
+.navpay{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;background:#008CFF;color:#fff;padding:8px 12px;border-radius:4px;white-space:nowrap;margin-left:-6px}
+.navpay:hover{background:#1a98ff}
+@media (max-width:480px){.lane .wrap{gap:8px}.mark{font-size:12.5px}.navcta,.navpay{font-size:10.5px;letter-spacing:.03em;padding:7px 8px}.navpay{margin-left:-2px}}
 </style>
 
 </head>
@@ -324,6 +315,7 @@ body.flock{overflow:hidden}
       <div class="ticks"><span>0m</span><span>10m</span><span>30m</span><span>60m</span><span>100m</span></div>
     </div>
     <a class="navcta" href="#finder" data-finder>Get started</a>
+    <a class="navpay" href="https://venmo.com/u/programmed4speed" target="_blank" rel="noopener" aria-label="Pay Programmed4Speed on Venmo">Venmo</a>
   </div>
 </header>
 
@@ -521,24 +513,9 @@ body.flock{overflow:hidden}
       <ol class="steps" data-stagger>
         <li><b>Pick a program</b><span>Speed, plyometrics, or both, plus any film review.</span></li>
         <li><b><a href="https://forms.gle/gU6GHiVvMSE6y1nh9" target="_blank" rel="noopener">Fill out the intake &#8599;</a></b><span>Your events, PRs, schedule, equipment, and injuries. No commitment.</span></li>
-        <li><b>Pay and get your plan</b><span><a href="#pay">Pay on Venmo</a>, and your plan is delivered within 48 hours.</span></li>
+        <li><b>Get your plan</b><span>Delivered within 48 hours of payment and intake.</span></li>
         <li><b>Train and check in</b><span>Send updates as you go and your plan adjusts with you.</span></li>
       </ol>
-    </section>
-
-    <section id="pay">
-      <p class="eyebrow" data-r>Payment</p>
-      <h3 class="title" data-r>Pay with Venmo</h3>
-      <p class="intro" data-r>Once your intake form is in and your plan is confirmed, pay through our Venmo business profile. Tap your program and Venmo opens with the amount filled in. Add your name to the note so we can match your payment.</p>
-      <div class="paygrid" data-stagger>
-        <div class="paycard"><div class="pn">3-Week Jumpstart</div><div class="pp">$30</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=30&amp;note=P4S%203-Week%20Jumpstart%20-%20(your%20name)" target="_blank" rel="noopener">Pay $30 on Venmo</a></div>
-        <div class="paycard"><div class="pn">5-Week Builder</div><div class="pp">$49</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=49&amp;note=P4S%205-Week%20Builder%20-%20(your%20name)" target="_blank" rel="noopener">Pay $49 on Venmo</a></div>
-        <div class="paycard"><div class="pn">7-Week Full Speed</div><div class="pp">$65</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=65&amp;note=P4S%207-Week%20Full%20Speed%20-%20(your%20name)" target="_blank" rel="noopener">Pay $65 on Venmo</a></div>
-        <div class="paycard"><div class="pn">4-Week Plyo Power</div><div class="pp">$25</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=25&amp;note=P4S%204-Week%20Plyo%20Power%20-%20(your%20name)" target="_blank" rel="noopener">Pay $25 on Venmo</a></div>
-        <div class="paycard"><div class="pn">Film review: 1 clip</div><div class="pp">$10</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=10&amp;note=P4S%20Film%20review%3A%201%20clip%20-%20(your%20name)" target="_blank" rel="noopener">Pay $10 on Venmo</a></div>
-        <div class="paycard"><div class="pn">Film review: 3 clips</div><div class="pp">$20</div><a class="btn vbtn" href="https://venmo.com/programmed4speed?txn=pay&amp;amount=20&amp;note=P4S%20Film%20review%3A%203%20clips%20-%20(your%20name)" target="_blank" rel="noopener">Pay $20 on Venmo</a></div>
-      </div>
-      <p class="paynote" data-r>You're paying <b>@Programmed4Speed</b> on Venmo. Got the first-3 discount? Change the amount to the price we send you. Plans are written after payment, and refunds are available until your plan is delivered.</p>
     </section>
 
     <section>
