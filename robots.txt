@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://programmed4speed-cpu.github.io/sitemap.xml
