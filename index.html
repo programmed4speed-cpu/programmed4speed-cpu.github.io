@@ -664,6 +664,7 @@ body.flock{overflow:hidden}
   function pick(){
     if(A.goal==='jump') return 'P';
     if(A.when==='soon') return 'J';
+    if(A.support==='high') return 'F';
     var s={J:0,B:1,F:0};
     if(A.when==='mid'){s.B+=2;s.F+=1;} else {s.B+=1;s.F+=2;}
     if(A.goal==='accel'){s.J+=1;s.B+=1;} else if(A.goal==='top'){s.B+=2;s.F+=1;} else if(A.goal==='endure'){s.F+=3;}
