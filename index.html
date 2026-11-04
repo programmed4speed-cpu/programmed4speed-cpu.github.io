@@ -663,81 +663,193 @@ body.flock{overflow:hidden}
 <script>
 (function(){
   var EMAIL='programmed4speed@gmail.com', FORM='https://forms.gle/gU6GHiVvMSE6y1nh9';
-  var Q=[
-    {k:'sport',q:'What is your main sport?',o:[
-      ['track','Track and field','Sprints, hurdles, relays, or jumps'],
-      ['football','Football',''],
-      ['soccer','Soccer',''],
-      ['basketball','Basketball',''],
-      ['other','Another sport','Baseball, lacrosse, volleyball, and more']]},
-    {k:'when',q:'When is your next big meet, game, or tryout?',o:[
-      ['soon','Less than 4 weeks away',''],
-      ['mid','1 to 2 months away',''],
-      ['far','2+ months away','Or I am in my off-season']]},
-    {k:'goal',q:'What do you want to improve most?',o:[
-      ['accel','A faster start and first step','The first 10 to 30 meters'],
-      ['top','Higher top speed','Faster once you are up and running'],
-      ['endure','Holding speed late','Not slowing down at the end of races or long plays'],
-      ['jump','More explosive power','Jumping higher and more pop off the ground']]},
-    {k:'support',q:'How much coaching support do you want?',o:[
-      ['low','Just the plan','I will run with it on my own'],
-      ['mid','One check-in halfway through',''],
-      ['high','Weekly check-ins','So the plan adjusts as I go']]}
-  ];
-  var P={
-    J:{n:'3-Week Jumpstart',p:'$30',why:['Short enough to finish before your next big day, and light enough that you show up fresh.','Focused on acceleration and start mechanics, the quickest place to drop time.']},
-    B:{n:'5-Week Builder',p:'$49',why:['Long enough to build both acceleration and top speed, with time to see real progress.','Includes plyometrics and strength, plus a check-in halfway through.']},
-    F:{n:'7-Week Full Speed',p:'$65',why:['Covers acceleration, top speed, and speed endurance, so you hold your speed late.','Weekly check-ins, so your plan adjusts as you go.']},
-    P:{n:'4-Week Plyo Power',p:'$25',why:['3 sessions a week built for a quicker first step and more pop off the ground.','No gym needed, and it fits around your team practices.']}
+  var PLANS={
+    J:{n:'3-Week Jumpstart',p:30,b:45,line:'A short, focused block on acceleration and start mechanics, light enough that you show up fresh.'},
+    B:{n:'5-Week Builder',p:49,b:64,line:'Builds acceleration and top speed with plyometrics, strength, and a check-in halfway through.'},
+    F:{n:'7-Week Full Speed',p:65,b:80,line:'Covers acceleration, top speed, and speed endurance, with weekly check-ins that adjust the plan.'},
+    P:{n:'4-Week Plyo Power',p:25,line:'Three jump sessions a week for a quicker first step, more pop off the ground, and a higher vertical. No gym needed.'}
   };
-  var SPORT={track:'Written around your events and meet schedule.',football:'Built for football speed: first step and 10 to 40 yard bursts.',soccer:'Built for soccer: first-step quickness and repeat sprints.',basketball:'Built for basketball: first step, change of direction, and vertical.',other:'Written around the movements and season of your sport.'};
-  var WHEN={soon:'Your competition is under 4 weeks away, so this keeps the training load right for showing up fast.',mid:'With 1 to 2 months to go, this fits before your season and still leaves you fresh.',far:'You are in the off-season, which is the best time to build speed that lasts.'};
-  var GOAL={accel:'You want a faster start, and this plan puts acceleration work first.',top:'You want more top speed, and this plan includes max velocity work.',endure:'You want to hold speed late, and this plan trains speed endurance.',jump:'You want more explosive power, and this plan is built around jumps and plyometrics.'};
-  var el=document.getElementById('finder'), body=el.querySelector('.fbody'), bar=el.querySelector('.fprog span'), A={}, i=0, last=null;
-  function pick(){
-    if(A.goal==='jump') return 'P';
-    if(A.when==='soon') return 'J';
-    if(A.support==='high') return 'F';
-    var s={J:0,B:1,F:0};
-    if(A.when==='mid'){s.B+=2;s.F+=1;} else {s.B+=1;s.F+=2;}
-    if(A.goal==='accel'){s.J+=1;s.B+=1;} else if(A.goal==='top'){s.B+=2;s.F+=1;} else if(A.goal==='endure'){s.F+=3;}
-    if(A.support==='low'){s.J+=1;} else if(A.support==='mid'){s.B+=2;} else {s.F+=2;}
-    return ['B','F','J'].reduce(function(a,b){return s[b]>s[a]?b:a;});
-  }
-  function label(k){for(var x=0;x<Q.length;x++){if(Q[x].k===k){for(var y=0;y<Q[x].o.length;y++){if(Q[x].o[y][0]===A[k])return Q[x].o[y][1];}}}return '';}
+  /* Each option can set: g (goal: accel, top, endure, jump), pw (wants power add-on), ev (event word), why (reason line), next (node id). */
+  var N={
+    who:{q:function(){return 'Who is taking this quiz?';},o:[
+      {v:'athlete',l:'I am the athlete',next:'sport',set:{who:'athlete'}},
+      {v:'parent',l:'I am a parent',s:'Answer for your athlete',next:'sport',set:{who:'parent'}},
+      {v:'coach',l:'I am a coach',s:'Answer for one athlete or your group',next:'sport',set:{who:'coach'}}]},
+    sport:{q:function(){return Y('What is your main sport?','What is your athlete\'s main sport?');},o:[
+      {v:'track',l:'Track and field',next:'trEvent',set:{ev:'meet'}},
+      {v:'football',l:'Football',next:'fbPos',set:{ev:'game'}},
+      {v:'soccer',l:'Soccer',next:'scPos',set:{ev:'game'}},
+      {v:'basketball',l:'Basketball',next:'bbGoal',set:{ev:'game'}},
+      {v:'baseball',l:'Baseball or softball',next:'bsPos',set:{ev:'game'}},
+      {v:'other',l:'Another sport',s:'Lacrosse, volleyball, rugby, tennis, and more',next:'otType',set:{ev:'competition'}}]},
+
+    /* TRACK */
+    trEvent:{q:function(){return Y('What are your main events?','What are your athlete\'s main events?');},o:[
+      {v:'short',l:'100m and 200m',next:'trShort'},
+      {v:'long',l:'400m',next:'tr400'},
+      {v:'hurdles',l:'Hurdles',next:'trHurdle'},
+      {v:'jumps',l:'Long jump, triple jump, or high jump',next:'trJump'},
+      {v:'distance',l:'800m and up',next:'trDist'}]},
+    trShort:{q:function(){return 'Which part of the race needs the most work?';},o:[
+      {v:'start',l:'The start and first 30 meters',s:'Getting out of the blocks',g:'accel',why:'Your 100/200 gets faster fastest from a better start, so this plan puts block and acceleration work first.',next:'when'},
+      {v:'mid',l:'Top speed, 30 to 70 meters',g:'top',why:'Top-end speed in the middle of the race is where most 100/200 runners leave time, so max velocity work is built in.',next:'when'},
+      {v:'end',l:'Holding speed at the finish',s:'Getting passed late in the race',g:'endure',why:'Fading at the finish is a speed endurance problem, and this plan trains you to hold your speed through the line.',next:'when'}]},
+    tr400:{q:function(){return 'Where does the 400 hurt the most?';},o:[
+      {v:'fade',l:'I die in the last 100',s:'Tying up on the home stretch',g:'endure',why:'The last 100 of a 400 is all speed endurance, which this plan builds week by week.',next:'when'},
+      {v:'raw',l:'I need more raw speed',s:'My 200 speed holds me back',g:'top',why:'A faster 200 makes every 400 pace feel easier, so this plan raises your top speed first.',next:'when'},
+      {v:'pace',l:'My first 200 is too slow',g:'accel',why:'A quicker, relaxed first 200 sets up the whole race, starting with better acceleration out of the blocks.',next:'when'}]},
+    trHurdle:{q:function(){return 'What is the biggest issue in your hurdle race?';},o:[
+      {v:'first',l:'Getting to the first hurdle',g:'accel',pw:1,why:'Attacking the first hurdle comes from a powerful start and quick first 8 steps, which this plan trains directly.',next:'when'},
+      {v:'rhythm',l:'Speed between the hurdles',g:'top',pw:1,why:'Faster rhythm between hurdles comes from top speed and stiff, quick ground contacts, both built into this plan.',next:'when'},
+      {v:'run',l:'Fading after the last hurdle',g:'endure',why:'Holding speed through the last hurdles and the run-in is speed endurance, which this plan trains.',next:'when'}]},
+    trJump:{q:function(){return Y('What do you want to improve most?','What does your athlete want to improve most?');},o:[
+      {v:'approach',l:'A faster approach',g:'top',pw:1,why:'Jumpers go farther with a faster, controlled approach, so this plan builds top speed you can use on the runway.',next:'when'},
+      {v:'pop',l:'More pop at takeoff',g:'jump',why:'More pop at takeoff comes from plyometrics and reactive strength, which is exactly what Plyo Power trains.',next:'when'},
+      {v:'both',l:'Both',g:'top',pw:1,why:'You want approach speed and takeoff power, so pairing a speed plan with Plyo Power covers both.',next:'when'}]},
+    trDist:{q:function(){return Y('What do you want speed work to help with?','What should speed work help your athlete with?');},o:[
+      {v:'kick',l:'A faster finishing kick',g:'endure',why:'A stronger kick comes from top speed you can reach while tired, and this plan trains exactly that.',next:'when'},
+      {v:'form',l:'More efficient running form',g:'accel',why:'Sprint drills clean up posture and arm action, which makes every distance pace more efficient.',next:'when'}]},
+
+    /* FOOTBALL */
+    fbPos:{q:function(){return Y('What position do you play?','What position does your athlete play?');},o:[
+      {v:'skill',l:'WR, RB, DB, or QB',next:'fbSkill'},
+      {v:'lb',l:'Linebacker, TE, or safety',next:'fbLb'},
+      {v:'line',l:'Offensive or defensive line',next:'fbLine'}]},
+    fbSkill:{q:function(){return Y('What do you want most on the field?','What does your athlete want most on the field?');},o:[
+      {v:'forty',l:'A faster 40 time',s:'For a combine, camp, or recruiting',g:'accel',why:'A faster 40 comes from a better start and the first 10 yards, which this plan trains first.',next:'fbEvent'},
+      {v:'break',l:'Breakaway speed',s:'Not getting caught from behind',g:'top',why:'Breakaway plays are won at top speed, so this plan includes max velocity sprinting.',next:'fbEvent'},
+      {v:'cuts',l:'A quicker first step and cuts',g:'accel',pw:1,why:'Getting open and making people miss starts with your first step, which this plan builds with acceleration and jump work.',next:'fbEvent'}]},
+    fbLb:{q:function(){return Y('What do you want most on the field?','What does your athlete want most on the field?');},o:[
+      {v:'close',l:'Closing speed to the ball',g:'top',why:'Closing speed is top speed reached quickly, so this plan trains both acceleration and max velocity.',next:'fbEvent'},
+      {v:'step',l:'A faster first step',g:'accel',pw:1,why:'Reading and reacting is only as good as your first step, which this plan makes more explosive.',next:'fbEvent'}]},
+    fbLine:{q:function(){return Y('What do you want most at the line?','What does your athlete want most at the line?');},o:[
+      {v:'stance',l:'Getting out of my stance faster',g:'accel',pw:1,why:'Linemen win the first 2 yards, so this plan focuses on getting out of your stance fast and low.',next:'fbEvent'},
+      {v:'power',l:'More explosive power',g:'jump',why:'Explosive power off the ball is built with plyometrics, which is exactly what Plyo Power trains.',next:'fbEvent'}]},
+    fbEvent:{q:function(){return Y('Do you have a combine, camp, or tryout coming up?','Does your athlete have a combine, camp, or tryout coming up?');},o:[
+      {v:'soon',l:'Yes, in less than 4 weeks',set:{when:'soon',ev:'combine'},next:'support'},
+      {v:'mid',l:'Yes, in 1 to 2 months',set:{when:'mid',ev:'combine'},next:'support'},
+      {v:'far',l:'No, it is the off-season',set:{when:'far'},next:'support'}]},
+
+    /* SOCCER */
+    scPos:{q:function(){return Y('What position do you play?','What position does your athlete play?');},o:[
+      {v:'fwd',l:'Forward or winger',g:'accel',why:'Forwards and wingers win games by beating defenders in the first few steps, which this plan trains first.',next:'when'},
+      {v:'mid',l:'Midfielder',g:'endure',why:'Midfielders sprint over and over all game, so this plan builds speed you can repeat in the 89th minute.',next:'when'},
+      {v:'def',l:'Defender',g:'top',why:'Defenders need recovery speed to track runners down, so this plan builds top-end speed.',next:'when'},
+      {v:'gk',l:'Goalkeeper',g:'jump',why:'Keepers need explosive dives and jumps, which is exactly what Plyo Power trains.',next:'when'}]},
+
+    /* BASKETBALL */
+    bbGoal:{q:function(){return Y('What do you want to improve most on the court?','What does your athlete want to improve most on the court?');},o:[
+      {v:'step',l:'My first step to the basket',g:'accel',pw:1,why:'Beating your defender off the dribble starts with your first step, which this plan makes quicker.',next:'bbVert'},
+      {v:'vert',l:'My vertical jump',g:'jump',why:'A higher vertical comes from plyometrics and reactive strength, which is exactly what Plyo Power trains.',next:'bbVert'},
+      {v:'trans',l:'Speed in transition',g:'top',why:'Getting down the floor first is top speed, so this plan includes max velocity sprinting.',next:'bbVert'},
+      {v:'def',l:'Defensive quickness',g:'accel',pw:1,why:'Staying in front of your man comes from quick, powerful first steps in every direction.',next:'bbVert'}]},
+    bbVert:{q:function(){return Y('Do you also want to jump higher?','Does your athlete also want to jump higher?');},skipIf:function(){return A.g==='jump';},o:[
+      {v:'yes',l:'Yes, that matters too',set:{pw:1},next:'when'},
+      {v:'no',l:'No, speed is the focus',set:{pw:0},next:'when'}]},
+
+    /* BASEBALL */
+    bsPos:{q:function(){return Y('Where do you play?','Where does your athlete play?');},o:[
+      {v:'inf',l:'Infield',next:'bsGoal'},
+      {v:'of',l:'Outfield',next:'bsGoal'},
+      {v:'c',l:'Catcher',next:'bsGoal'},
+      {v:'p',l:'Pitcher',s:'Speed and power for fielding and running',next:'bsGoal'}]},
+    bsGoal:{q:function(){return Y('What do you want most?','What does your athlete want most?');},o:[
+      {v:'steal',l:'Steal more bases',g:'accel',why:'Stealing bases is all about your jump and first 3 steps, which this plan trains first.',next:'when'},
+      {v:'beat',l:'Beat out more ground balls',g:'top',why:'Beating the throw to first takes top speed reached quickly, both built into this plan.',next:'when'},
+      {v:'range',l:'More range in the field',g:'accel',pw:1,why:'Range comes from a quicker first step and explosive change of direction, which this plan builds.',next:'when'},
+      {v:'extra',l:'Take the extra base',g:'endure',why:'Going first to third means holding speed around the bases, which this plan trains.',next:'when'}]},
+
+    /* OTHER */
+    otType:{q:function(){return Y('What kind of sport do you play?','What kind of sport does your athlete play?');},o:[
+      {v:'field',l:'Field sport',s:'Lacrosse, rugby, field hockey',next:'otGoal'},
+      {v:'court',l:'Court or net sport',s:'Volleyball, tennis, pickleball',next:'otGoal'},
+      {v:'combat',l:'Combat or individual sport',s:'Wrestling, martial arts, and more',next:'otGoal'}]},
+    otGoal:{q:function(){return Y('What do you want most?','What does your athlete want most?');},o:[
+      {v:'step',l:'A quicker first step',g:'accel',why:'Almost every sport is decided in the first few steps, so this plan trains acceleration first.',next:'when'},
+      {v:'top',l:'More top speed',g:'top',why:'You want more speed in the open, so this plan includes max velocity sprinting.',next:'when'},
+      {v:'jump',l:'Jump higher and be more explosive',g:'jump',why:'Explosiveness and a higher jump come from plyometrics, which is exactly what Plyo Power trains.',next:'when'},
+      {v:'repeat',l:'Stay fast late in games',g:'endure',why:'Staying fast late in games is speed endurance, which this plan builds.',next:'when'}]},
+
+    /* SHARED */
+    when:{q:function(){var e=A.ev||'competition';return Y('When is your next big '+e+'?','When is your athlete\'s next big '+e+'?');},o:[
+      {v:'soon',l:'Less than 4 weeks away',set:{when:'soon'},next:'support'},
+      {v:'mid',l:'1 to 2 months away',set:{when:'mid'},next:'support'},
+      {v:'far',l:'2+ months away',s:'Or it is the off-season',set:{when:'far'},next:'support'}]},
+    support:{q:function(){return Y('How much coaching support do you want?','How much coaching support does your athlete want?');},o:[
+      {v:'low',l:'Just the plan',s:'Follow it on my own',set:{sup:'low'},next:null},
+      {v:'mid',l:'One check-in halfway through',set:{sup:'mid'},next:null},
+      {v:'high',l:'Weekly check-ins',s:'So the plan adjusts as you go',set:{sup:'high'},next:null}]}
+  };
+  var el=document.getElementById('finder'), body=el.querySelector('.fbody'), bar=el.querySelector('.fprog span'), A={}, hist=[], node='who', last=null, picks=[];
+  function Y(a,b){return A.who&&A.who!=='athlete'?b:a;}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function step(){
-    var q=Q[i]; bar.style.width=(i/(Q.length))*100+'%';
-    var h='<p class="fstep">Question '+(i+1)+' of '+Q.length+'</p><h3 class="fq" id="fq">'+esc(q.q)+'</h3><div class="fopts">';
-    q.o.forEach(function(o){h+='<button type="button" class="fopt'+(A[q.k]===o[0]?' on':'')+'" data-v="'+o[0]+'">'+esc(o[1])+(o[2]?'<small>'+esc(o[2])+'</small>':'')+'</button>';});
-    h+='</div>'+(i>0?'<button type="button" class="fback">&larr; Back</button>':'');
+    var n=N[node];
+    if(n.skipIf&&n.skipIf()){go(n.o[0].next,null,true);return;}
+    var k=hist.length; bar.style.width=Math.min(92,(k/(k+3))*100)+'%';
+    var h='<p class="fstep">Question '+(k+1)+'</p><h3 class="fq" id="fq">'+esc(n.q())+'</h3><div class="fopts">';
+    n.o.forEach(function(o,i){h+='<button type="button" class="fopt" data-i="'+i+'">'+esc(o.l)+(o.s?'<small>'+esc(o.s)+'</small>':'')+'</button>';});
+    h+='</div>'+(k>0?'<button type="button" class="fback">&larr; Back</button>':'');
     body.innerHTML=h;
     var f=body.querySelector('.fopt'); if(f) f.focus();
   }
+  function snapshot(){return JSON.stringify(A);}
+  function go(next,choice,skipped){
+    if(!skipped) hist.push({node:node,A:snapshot(),picks:picks.slice()});
+    if(next){node=next;step();} else result();
+  }
+  function choose(i){
+    var o=N[node].o[i];
+    var s=o.set||{}; for(var k in s) A[k]=s[k];
+    if(o.g) A.g=o.g; if(o.pw) A.pw=1; if(o.why) A.why=o.why;
+    picks.push([N[node].q(),o.l]);
+    go(o.next,o);
+  }
+  function back(){if(!hist.length)return; var p=hist.pop(); node=p.node; A=JSON.parse(p.A); picks=p.picks; step();}
+  function pick(){
+    if(A.g==='jump') return 'P';
+    if(A.when==='soon') return 'J';
+    if(A.sup==='high') return 'F';
+    var s={J:0,B:1,F:0};
+    if(A.when==='mid'){s.B+=2;s.F+=1;} else {s.B+=1;s.F+=2;}
+    if(A.g==='accel'){s.J+=1;s.B+=1;} else if(A.g==='top'){s.B+=2;s.F+=1;} else if(A.g==='endure'){s.F+=3;}
+    if(A.sup==='low'){s.J+=1;} else if(A.sup==='mid'){s.B+=2;}
+    return ['B','F','J'].reduce(function(a,b){return s[b]>s[a]?b:a;});
+  }
   function result(){
     bar.style.width='100%';
-    var k=pick(), p=P[k], why=[];
-    if(k==='P'){why.push(GOAL.jump);why.push(SPORT[A.sport]);why=why.concat(p.why);}
-    else {why.push(WHEN[A.when]);why.push(GOAL[A.goal]);why.push(SPORT[A.sport]);why.push(p.why[1]);}
-    var add='';
-    if(k==='P' && A.when!=='soon'){add='<p class="fadd"><b>Want speed too?</b> Bundle Plyo Power with the 5-Week Builder for $64 and save $10. The plan is adjusted so your total training load stays right.</p>';}
-    else if(k!=='P' && A.sport!=='track'){add='<p class="fadd"><b>Bundle and save $10:</b> add 4-Week Plyo Power for just $15 more, for a quicker first step and a higher vertical in your sport.</p>';}
-    var mail='mailto:'+EMAIL+'?subject='+encodeURIComponent('Interested in the '+p.n)+'&body='+encodeURIComponent('Hi Programmed4Speed,\n\nThe plan finder on your website matched me with the '+p.n+' ('+p.p+') and I am interested.\n\nMy answers:\n- Sport: '+label('sport')+'\n- Next big competition: '+label('when')+'\n- Main goal: '+label('goal')+'\n- Support: '+label('support')+'\n\nName:\nAge / grade:\nEvents or position:\nCurrent PRs:\n\nThanks!');
-    var h='<p class="fstep">Your best fit</p><h3 class="fplan" id="fq">'+esc(p.n)+'</h3><div class="fprice">'+p.p+'</div><ul class="fwhy">';
+    var k=pick(), p=PLANS[k], bundle=(k!=='P'&&A.pw), why=[];
+    if(A.why) why.push(A.why);
+    var e=A.ev||'competition';
+    if(A.when==='soon') why.push('Your '+e+' is under 4 weeks away, so the training load is set up for you to show up fast, not tired.');
+    else if(A.when==='mid') why.push('With 1 to 2 months until your '+e+', this fits in before it and leaves you fresh.');
+    else if(A.when==='far') why.push('It is the off-season, the best time to build speed that lasts into next season.');
+    why.push(p.line);
+    if(A.sup==='high'&&(k==='J'||k==='B')) why.push('Weekly check-ins are available by upgrading to the 7-Week Full Speed at any time.');
+    if(A.who==='parent') why.push('Every plan is written for your athlete specifically, and you can ask questions anytime.');
+    if(A.who==='coach') why.push('Have several athletes? Email us about a team package.');
+    var title=bundle?(p.n+' + Plyo Power'):p.n, price=bundle?p.b:p.p;
+    var lines=picks.map(function(x){return '- '+x[0]+' '+x[1];}).join('\n');
+    var mail='mailto:'+EMAIL+'?subject='+encodeURIComponent('Interested in the '+title)+'&body='+encodeURIComponent('Hi Programmed4Speed,\n\nThe plan finder on your website matched '+(A.who==='athlete'?'me':'my athlete')+' with the '+title+' ($'+price+') and I am interested.\n\nMy answers:\n'+lines+'\n\nName:\nAthlete age / grade:\nCurrent PRs or times:\n\nThanks!');
+    var h='<p class="fstep">'+(A.who&&A.who!=='athlete'?'Best fit for your athlete':'Your best fit')+'</p><h3 class="fplan" id="fq">'+esc(title)+'</h3><div class="fprice">$'+price+(bundle?' <s style="font-size:22px;color:var(--muted)">$'+(p.p+25)+'</s>':'')+'</div><ul class="fwhy">';
     why.forEach(function(w){h+='<li><span>'+esc(w)+'</span></li>';});
-    h+='</ul>'+add+'<div class="facts"><a class="btn" href="'+mail+'">I want this plan</a><a class="btn ghost" href="'+FORM+'" target="_blank" rel="noopener">Fill out the intake form</a></div>';
+    h+='</ul>';
+    if(bundle) h+='<p class="fadd"><b>Bundle and save $10:</b> Plyo Power runs alongside your speed plan for extra power, and the training load is adjusted so it all fits.</p>';
+    else if(k==='P') h+='<p class="fadd"><b>Want speed too?</b> Pair Plyo Power with the 5-Week Builder for $64 and save $10.</p>';
+    h+='<div class="facts"><a class="btn" href="'+mail+'">I want this plan</a><a class="btn ghost" href="'+FORM+'" target="_blank" rel="noopener">Fill out the intake form</a></div>';
     h+='<p class="fsmall">No payment and no commitment yet. <button type="button" class="fre">Retake the quiz</button> or <a href="#programs" class="fsee">compare all programs</a>.</p>';
     body.innerHTML=h;
     var b=body.querySelector('.btn'); if(b) b.focus();
   }
+  function reset(){A={};hist=[];picks=[];node='who';step();}
   body.addEventListener('click',function(e){
     var o=e.target.closest('.fopt');
-    if(o){A[Q[i].k]=o.getAttribute('data-v'); o.classList.add('on'); setTimeout(function(){i++; if(i<Q.length) step(); else result();},160); return;}
-    if(e.target.closest('.fback')){i=Math.max(0,i-1);step();return;}
-    if(e.target.closest('.fre')){A={};i=0;step();return;}
+    if(o){o.classList.add('on'); var i=+o.getAttribute('data-i'); setTimeout(function(){choose(i);},150); return;}
+    if(e.target.closest('.fback')){back();return;}
+    if(e.target.closest('.fre')){reset();return;}
     if(e.target.closest('.fsee')){close();}
   });
-  function open(e){if(e)e.preventDefault(); last=document.activeElement; A={}; i=0; el.hidden=false; document.body.classList.add('flock'); step();}
+  function open(e){if(e)e.preventDefault(); last=document.activeElement; el.hidden=false; document.body.classList.add('flock'); reset();}
   function close(){el.hidden=true; document.body.classList.remove('flock'); if(last&&last.focus) last.focus();}
   el.querySelector('.fx').addEventListener('click',close);
   el.addEventListener('click',function(e){if(e.target===el) close();});
