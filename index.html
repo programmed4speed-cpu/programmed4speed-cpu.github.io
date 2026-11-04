@@ -312,6 +312,16 @@ body.flock{overflow:hidden}
 .bcard .pick{margin-top:auto}
 .ticklist a{color:var(--red-ink)}
 @media (max-width:820px){.bgrid{grid-template-columns:1fr}}
+
+/* contact */
+.navcontact{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--fg);border:1px solid var(--line);padding:7px 12px;border-radius:4px;white-space:nowrap;margin-left:-6px;transition:border-color .2s}
+.navcontact:hover{border-color:var(--red)}
+@media (max-width:480px){.lane .wrap{gap:8px}.mark{font-size:12.5px}.navcta,.navcontact{font-size:10.5px;letter-spacing:.03em;padding:7px 8px}.navcontact{margin-left:-2px}}
+.cwrow{display:flex;flex-direction:column;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:12px}
+.cwrow .ck{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-ink)}
+.cwrow .cv{font-family:var(--display);font-weight:800;font-size:clamp(15px,4.3vw,20px);overflow-wrap:anywhere}
+.cwbtns{display:flex;flex-wrap:wrap;gap:8px}
+.cwbtns .btn{flex:1 1 120px;text-align:center;padding:12px 14px}
 </style>
 
 </head>
@@ -328,6 +338,7 @@ body.flock{overflow:hidden}
       <div class="ticks"><span>0m</span><span>10m</span><span>30m</span><span>60m</span><span>100m</span></div>
     </div>
     <a class="navcta" href="#finder" data-finder>Get started</a>
+    <a class="navcontact" href="#contact" data-contact>Contact</a>
   </div>
 </header>
 
@@ -859,5 +870,40 @@ body.flock{overflow:hidden}
 })();
 </script>
 <script data-goatcounter="https://programmed4speed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<div class="finder" id="contact" hidden role="dialog" aria-modal="true" aria-labelledby="ctitle">
+  <div class="fbox">
+    <button class="fx" type="button" aria-label="Close">&times;</button>
+    <p class="fstep">Contact us</p>
+    <h3 class="fq" id="ctitle">Questions? Reach out anytime.</h3>
+    <p style="margin:0;color:var(--muted);font-size:15px">Text, call, or email and we will get back to you within 24 hours. No commitment.</p>
+    <div class="cwrow">
+      <span class="ck">Phone</span>
+      <span class="cv">(813) 485-6142</span>
+      <div class="cwbtns"><a class="btn" href="sms:+18134856142">Text us</a><a class="btn ghost" href="tel:+18134856142">Call</a></div>
+    </div>
+    <div class="cwrow">
+      <span class="ck">Email</span>
+      <span class="cv">programmed4speed@gmail.com</span>
+      <div class="cwbtns"><a class="btn" href="mailto:programmed4speed@gmail.com?subject=Question%20about%20Programmed4Speed">Email us</a><button class="btn ghost" type="button" id="cCopy">Copy email</button></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('contact'), last=null;
+  function open(e){if(e)e.preventDefault(); last=document.activeElement; el.hidden=false; document.body.classList.add('flock'); var b=el.querySelector('.btn'); if(b) b.focus();}
+  function close(){el.hidden=true; document.body.classList.remove('flock'); if(last&&last.focus) last.focus();}
+  el.querySelector('.fx').addEventListener('click',close);
+  el.addEventListener('click',function(e){if(e.target===el) close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!el.hidden) close();});
+  [].forEach.call(document.querySelectorAll('[data-contact]'),function(a){a.addEventListener('click',open);});
+  var c=document.getElementById('cCopy');
+  c.addEventListener('click',function(){
+    try{navigator.clipboard.writeText('programmed4speed@gmail.com').then(function(){c.textContent='Copied';setTimeout(function(){c.textContent='Copy email';},1800);});}catch(err){}
+  });
+  if(location.hash==='#contact') open();
+})();
+</script>
 </body>
 </html>
