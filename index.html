@@ -322,6 +322,30 @@ body.flock{overflow:hidden}
 .cwrow .cv{font-family:var(--display);font-weight:800;font-size:clamp(15px,4.3vw,20px);overflow-wrap:anywhere}
 .cwbtns{display:flex;flex-wrap:wrap;gap:8px}
 .cwbtns .btn{flex:1 1 120px;text-align:center;padding:12px 14px}
+
+/* sample day builder */
+.dbox{width:min(640px,100%)}
+.dsub{margin:0 0 12px;color:var(--muted);font-size:15px}
+.dchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.dchips span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--fg)}
+.dblk{border-top:1px solid var(--line);padding:14px 0 6px}
+.dh{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red-ink);margin:0 0 8px}
+.dh span{color:var(--muted);font-weight:500}
+.dlist{margin:0 0 8px;padding-left:18px;font-size:15px;line-height:1.6}
+.drow{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.drow:last-child{border-bottom:0}
+.dn{font-weight:700;font-size:15px}
+.dn small,.dd small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px;line-height:1.4}
+.dd{font-family:var(--mono);font-size:13.5px;text-align:right;white-space:nowrap}
+.dnote{background:var(--bg);border-left:3px solid var(--red);border-radius:6px;padding:12px 14px;margin:14px 0}
+.dnote b{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-ink)}
+.dnote p{margin:6px 0 0;font-size:14px;line-height:1.5}
+.dmore{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+.dmore b{color:var(--fg)}
+.daycta{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:22px 24px}
+.daycta h4{font-family:var(--display);font-weight:900;font-style:italic;font-size:24px;margin:0 0 4px}
+.daycta p{margin:0;color:var(--muted);max-width:52ch}
+@media (max-width:520px){.drow{grid-template-columns:1fr}.dd{text-align:left}}
 </style>
 
 </head>
@@ -453,6 +477,10 @@ body.flock{overflow:hidden}
           <div class="bcard pop"><span class="tag">Most popular</span><div class="bn">5-Week Builder + Plyo Power</div><div class="bp"><b>$64</b><s>$74</s></div><div class="save">You save $10</div><a class="btn pick" href="mailto:programmed4speed@gmail.com?subject=Interested%20in%20the%205-Week%20Builder%20%2B%20Plyo%20Power%20bundle&amp;body=Hi%20Programmed4Speed%2C%0A%0AI%27m%20interested%20in%20the%205-Week%20Builder%20%2B%20Plyo%20Power%20bundle%20%28%2464%29.%0A%0AName%3A%0AAge%20/%20grade%3A%0ASport%20and%20events%3A%0ACurrent%20PRs%3A%0AGoal%20or%20next%20big%20meet%3A%0AInstagram%20%28optional%29%3A%0A%0AThanks%21" data-plan="5-Week Builder + Plyo Power">I want this bundle</a></div>
           <div class="bcard"><div class="bn">7-Week Full Speed + Plyo Power</div><div class="bp"><b>$80</b><s>$90</s></div><div class="save">You save $10</div><a class="btn pick" href="mailto:programmed4speed@gmail.com?subject=Interested%20in%20the%207-Week%20Full%20Speed%20%2B%20Plyo%20Power%20bundle&amp;body=Hi%20Programmed4Speed%2C%0A%0AI%27m%20interested%20in%20the%207-Week%20Full%20Speed%20%2B%20Plyo%20Power%20bundle%20%28%2480%29.%0A%0AName%3A%0AAge%20/%20grade%3A%0ASport%20and%20events%3A%0ACurrent%20PRs%3A%0AGoal%20or%20next%20big%20meet%3A%0AInstagram%20%28optional%29%3A%0A%0AThanks%21" data-plan="7-Week Full Speed + Plyo Power">I want this bundle</a></div>
         </div>
+      </div>
+      <div class="daycta" id="sample-day-cta" data-r>
+        <div><h4>Try a free sample day</h4><p>Answer a few quick questions and get one workout written for your sport, position, and schedule. Takes 30 seconds.</p></div>
+        <a class="btn" href="#sample-day" data-day>Build my sample day</a>
       </div>
     </section>
 
@@ -847,7 +875,7 @@ body.flock{overflow:hidden}
     if(bundle) h+='<p class="fadd"><b>Bundle and save $10:</b> Plyo Power runs alongside your speed plan for extra power, and the training load is adjusted so it all fits.</p>';
     else if(k==='P') h+='<p class="fadd"><b>Want speed too?</b> Pair Plyo Power with the 5-Week Builder for $64 and save $10.</p>';
     h+='<div class="facts"><a class="btn" href="'+mail+'">I want this plan</a><a class="btn ghost" href="'+FORM+'" target="_blank" rel="noopener">Fill out the intake form</a></div>';
-    h+='<p class="fsmall">No payment and no commitment yet. <button type="button" class="fre">Retake the quiz</button> or <a href="#programs" class="fsee">compare all programs</a>.</p>';
+    h+='<p class="fsmall">No payment and no commitment yet. <button type="button" class="fre">Retake the quiz</button>, <a href="#programs" class="fsee">compare all programs</a>, or <a href="#sample-day" data-day>try a free sample day</a>.</p>';
     body.innerHTML=h;
     var b=body.querySelector('.btn'); if(b) b.focus();
   }
@@ -902,6 +930,268 @@ body.flock{overflow:hidden}
     try{navigator.clipboard.writeText('programmed4speed@gmail.com').then(function(){c.textContent='Copied';setTimeout(function(){c.textContent='Copy email';},1800);});}catch(err){}
   });
   if(location.hash==='#contact') open();
+})();
+</script>
+
+<div class="finder" id="sday" hidden role="dialog" aria-modal="true" aria-labelledby="dq">
+  <div class="fbox dbox">
+    <button class="fx" type="button" aria-label="Close">&times;</button>
+    <div class="fprog" aria-hidden="true"><span></span></div>
+    <div class="fbody" aria-live="polite"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var EMAIL='programmed4speed@gmail.com', FORM='https://forms.gle/gU6GHiVvMSE6y1nh9';
+  var A={}, hist=[], node='who', picks=[], last=null;
+  function Y(a,b){return A.who&&A.who!=='athlete'?b:a;}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  /* ---------- question tree ---------- */
+  var SPORTNEXT={track:'trEvent',football:'fbPos',soccer:'scPos',basketball:'bbRole',baseball:'bsPos',other:'otType'};
+  var N={
+    who:{q:function(){return 'Who is this sample day for?';},o:function(){return [
+      {l:'Me, I am the athlete',set:{who:'athlete'},next:'sport'},
+      {l:'My son or daughter',s:'Answer for your athlete',set:{who:'parent'},next:'sport'},
+      {l:'An athlete I coach',set:{who:'coach'},next:'sport'}];}},
+    sport:{q:function(){return Y('What sport do you play?','What sport do they play?');},o:function(){return [
+      {l:'Track and field',set:{sport:'track'}},{l:'Football',set:{sport:'football'}},{l:'Soccer',set:{sport:'soccer'}},
+      {l:'Basketball',set:{sport:'basketball'}},{l:'Baseball or softball',set:{sport:'baseball'}},
+      {l:'Another sport',s:'Lacrosse, volleyball, rugby, tennis, and more',set:{sport:'other'}}].map(function(o){o.next=SPORTNEXT[o.set.sport];return o;});}},
+    trEvent:{q:function(){return Y('What are your main events?','What are their main events?');},o:function(){return [
+      {l:'100m and 200m',set:{sub:'sprint',subl:'sprinter'}},{l:'400m',set:{sub:'400',subl:'400m runner'}},
+      {l:'Hurdles',set:{sub:'hurdles',subl:'hurdler'}},{l:'Long jump or triple jump',set:{sub:'jumps',subl:'jumper'}}].map(nx('focus'));}},
+    fbPos:{q:function(){return Y('What position do you play?','What position do they play?');},o:function(){return [
+      {l:'WR, RB, or DB',s:'Skill positions',set:{sub:'skill',subl:'skill player'}},
+      {l:'LB, TE, or QB',set:{sub:'lb',subl:'linebacker / TE / QB'}},
+      {l:'Offensive or defensive line',set:{sub:'line',subl:'lineman'}}].map(nx('focus'));}},
+    scPos:{q:function(){return Y('What position do you play?','What position do they play?');},o:function(){return [
+      {l:'Forward or winger',set:{sub:'fwd',subl:'forward'}},{l:'Midfielder',set:{sub:'mid',subl:'midfielder'}},
+      {l:'Defender',set:{sub:'def',subl:'defender'}},{l:'Goalkeeper',set:{sub:'gk',subl:'goalkeeper'}}].map(nx('focus'));}},
+    bbRole:{q:function(){return Y('What kind of player are you?','What kind of player are they?');},o:function(){return [
+      {l:'Guard',s:'Ball handler, quick first step',set:{sub:'guard',subl:'guard'}},
+      {l:'Wing',s:'Slasher, runs the floor',set:{sub:'wing',subl:'wing'}},
+      {l:'Big',s:'Post, rebounding, rim protection',set:{sub:'big',subl:'post player'}}].map(nx('focus'));}},
+    bsPos:{q:function(){return Y('Where do you play?','Where do they play?');},o:function(){return [
+      {l:'Outfield',set:{sub:'of',subl:'outfielder'}},{l:'Infield',set:{sub:'if',subl:'infielder'}},
+      {l:'Catcher',set:{sub:'c',subl:'catcher'}},{l:'Pitcher',set:{sub:'p',subl:'pitcher'}}].map(nx('focus'));}},
+    otType:{q:function(){return Y('What best describes your sport?','What best describes their sport?');},o:function(){return [
+      {l:'Field sport',s:'Lacrosse, rugby, field hockey',set:{sub:'field',subl:'field athlete'}},
+      {l:'Court sport',s:'Volleyball, tennis, pickleball',set:{sub:'court',subl:'court athlete'}},
+      {l:'Something else',s:'Wrestling, martial arts, cheer, and more',set:{sub:'gen',subl:'athlete'}}].map(nx('focus'));}},
+
+    focus:{q:function(){return Y('What do you want to get better at most?','What do they want to get better at most?');},o:function(){return FOCUS[A.sport+':'+A.sub]||FOCUS[A.sport]||FOCUS.def;}},
+    season:{q:function(){return Y('Are you in season right now?','Are they in season right now?');},o:function(){return [
+      {l:'Yes, '+(A.sport==='track'?'meets':'games')+' every week',set:{season:'in'},next:'gameIn'},
+      {l:'Preseason',s:'Season starts in the next few weeks',set:{season:'pre'},next:'gear'},
+      {l:'Off-season',s:'No competitions coming up soon',set:{season:'off'},next:'gear'}];}},
+    gameIn:{q:function(){return 'When is the next '+(A.sport==='track'?'meet':'game')+'?';},o:function(){return [
+      {l:'Tomorrow or the day after',s:'We will keep it light so the legs stay fresh',set:{gd:'close'},next:'gear'},
+      {l:'3 or more days away',set:{gd:'far'},next:'gear'}];}},
+    gear:{q:function(){return Y('Where will you train?','Where will they train?');},o:function(){return [
+      {l:'A track or a field',set:{gear:'field'}},
+      {l:'A field plus a weight room',set:{gear:'gym'}},
+      {l:'A field with a hill nearby',set:{gear:'hill'}},
+      {l:'A driveway, backyard, or street',s:'Not much space',set:{gear:'home'}}].map(nx(A.season==='in'&&A.gd==='close'?null:'time'));}},
+    time:{q:function(){return Y('How much time do you have?','How much time do they have?');},o:function(){return [
+      {l:'About 30 minutes',set:{time:30}},{l:'About 45 minutes',set:{time:45}},{l:'An hour',set:{time:60}}].map(nx(null));}}
+  };
+  function nx(n){return function(o){o.next=n;return o;};}
+  var F={
+    accel:{l:'A faster first step',s:'Quicker start and first 10 yards',set:{focus:'accel'}},
+    top:{l:'Higher top speed',s:'Faster once up and running',set:{focus:'top'}},
+    cod:{l:'Quicker cuts and change of direction',set:{focus:'cod'}},
+    jump:{l:'More explosive power',s:'Jump higher and more pop',set:{focus:'jump'}},
+    rep:{l:'Staying fast late in games',s:'Repeat sprints without fading',set:{focus:'rep'}},
+    start:{l:'A better start',s:'Blocks and the first 30 meters',set:{focus:'accel'}},
+    end:{l:'Holding speed at the end',s:'Not tying up in the last 100',set:{focus:'end'}},
+    rhythm:{l:'Rhythm between hurdles',set:{focus:'rhythm'}},
+    appr:{l:'A faster approach',set:{focus:'top'}},
+    take:{l:'A more powerful takeoff',set:{focus:'jump'}},
+    steal:{l:'Stealing bases and running the bases',set:{focus:'accel'}},
+    range:{l:'Getting to more balls',s:'First step and range',set:{focus:'cod'}},
+    lat:{l:'Quicker side-to-side movement',set:{focus:'cod'}}
+  };
+  function f(keys){return keys.map(function(k){var o=JSON.parse(JSON.stringify(F[k]));o.next='season';return o;});}
+  var FOCUS={
+    'track:sprint':f(['start','top','end','jump']),'track:400':f(['end','top','start']),
+    'track:hurdles':f(['start','rhythm','top']),'track:jumps':f(['appr','take','start']),
+    'football:skill':f(['accel','top','cod','jump']),'football:lb':f(['accel','cod','jump','rep']),'football:line':f(['accel','jump','cod']),
+    'soccer:fwd':f(['accel','top','cod','rep']),'soccer:mid':f(['rep','accel','cod']),'soccer:def':f(['accel','cod','top']),'soccer:gk':f(['lat','jump','accel']),
+    'basketball:guard':f(['accel','cod','jump','rep']),'basketball:wing':f(['accel','jump','top','rep']),'basketball:big':f(['jump','accel','lat']),
+    'baseball:of':f(['range','top','steal']),'baseball:if':f(['range','accel','steal']),'baseball:c':f(['accel','jump','steal']),'baseball:p':f(['jump','accel','steal']),
+    'other:court':f(['lat','jump','accel']),'other:field':f(['accel','top','cod','rep']),def:f(['accel','top','cod','jump'])
+  };
+
+  /* ---------- workout builder ---------- */
+  function D(n,sets,reps,unit,rest,cue,dist){return {n:n,sets:sets,reps:reps,unit:unit||'',rest:rest||'',cue:cue||'',dist:dist||0};}
+  var LIB={
+    accel:[D('Wall drill',3,6,'taps','30 s','Lean at 45°, drive the knee, punch the foot down under the hip.'),
+           D('Falling starts',4,1,'× 10 m','walk back','Fall forward until you have to run, then explode out.',10),
+           D('Starts from your game stance',5,1,'× 15 m','90 s','First 3 steps low and powerful. Push, don\'t reach.',15),
+           D('Resisted sprints',4,1,'× 15 m','2 min','Stay low for the first 5 steps and finish tall.',15)],
+    top:[D('A-skips into dribbles',2,1,'× 20 m','walk back','Tall hips, toes up, quick contacts.',20),
+         D('Build-ups',3,1,'× 40 m','walk back','Smooth to 90%. Stay relaxed in the face and hands.',40),
+         D('Flying sprints',4,1,'× 20 m fly','3 min','Build for 20 m, then hold full speed for 20 m.',40),
+         D('Wicket or cone runs',4,1,'× 30 m','2 min','Evenly spaced mini hurdles or cones. Quick, tall rhythm.',30)],
+    cod:[D('Deceleration drill',3,1,'× 10 m + stop','60 s','Sprint, then stop in 3 steps with hips low.',10),
+         D('45° cut drill',3,2,'each side','60 s','Plant outside the hip and push off, don\'t lean back.',10),
+         D('5-10-5 shuttle',4,1,'reps','90 s','Low on the turns, touch the line with your outside hand.',10),
+         D('Mirror reaction drill',4,1,'× 5 s','45 s','Partner or coach points, you react. Eyes up.')],
+    jump:[D('Pogo jumps',3,15,'reps','45 s','Stiff ankles, bounce off the ground fast.'),
+          D('Broad jumps',4,3,'reps','60 s','Swing the arms hard and stick the landing.'),
+          D('Bounds',3,1,'× 20 m','90 s','Big, powerful strides. Drive the knee up and forward.',20),
+          D('Drop-and-stick jumps',3,4,'reps','60 s','Step off a low box, land quiet, then jump straight up.')],
+    rep:[D('Repeat sprints',6,1,'× 30 m','30 s','Every rep as fast as the first. Walk back between them.',30),
+         D('Shuttle sprints',4,1,'× (10-20-10 m)','60 s','Change direction fast, sprint between lines.',20),
+         D('Tempo runs',6,1,'× 60 m at 70%','45 s walk','Relaxed and smooth. This builds the engine.',60)],
+    end:[D('Speed endurance runs',3,1,'× 150 m at 90%','4 min','Relax the shoulders over the last 50 m.',150),
+         D('Flying 30s',3,1,'× 30 m fly','3 min','Build for 20 m, then hold full speed.',50),
+         D('Tempo 100s',4,1,'× 100 m at 70%','60 s walk','Smooth and tall.',100)],
+    rhythm:[D('Hurdle walkovers',2,1,'× 8 hurdles','walk back','Lead knee up, quick trail leg.'),
+            D('Rhythm runs over low hurdles',4,1,'× 4 hurdles','2 min','Shortened spacing, focus on 3-step rhythm.',40),
+            D('Starts to hurdle 1',4,1,'reps','3 min','Same number of steps every time.',15)]
+  };
+  var SPORT={
+    'football:skill':D('Stance start into a cut',4,2,'each side','90 s','Explode 5 yards, plant, and break at full speed.',10),
+    'football:lb':D('Backpedal, plant, and sprint',4,1,'× 15 yd','90 s','Stay low on the plant and drive out of it.',15),
+    'football:line':D('Get-offs from a 3-point stance',6,1,'× 5 yd','60 s','First step fast and low. React to a clap or cadence.',5),
+    'soccer:fwd':D('Curved sprints',4,1,'× 25 m','2 min','Lean into the curve like a run in behind.',25),
+    'soccer:mid':D('Box-to-box repeat runs',4,1,'× 40 m','45 s','Sprint 20, jog 20. Stay sharp when tired.',40),
+    'soccer:def':D('Backpedal, turn, and sprint',4,1,'× 20 m','90 s','Open the hips fast and drive out of the turn.',20),
+    'soccer:gk':D('Lateral shuffle into a 5 m burst',4,2,'each side','60 s','Stay set, then explode off the near foot.',5),
+    'basketball:guard':D('Defensive slide into a sprint',4,1,'× (3 slides + 10 m)','60 s','Low slides, then open the hips and go.',10),
+    'basketball:wing':D('Approach jumps',4,3,'reps','60 s','2-step approach, jump as high as you can.'),
+    'basketball:big':D('Drop step and explode',4,2,'each side','60 s','Quick drop step, then jump up strong.'),
+    'baseball:of':D('Drop step and go',4,2,'each side','60 s','Open the hip, turn, and sprint 20 m.',20),
+    'baseball:if':D('Lateral first step reaction',6,1,'× 5 m','45 s','Ready position, react to a point, cross over and go.',5),
+    'baseball:c':D('Pop up from crouch and sprint',5,1,'× 10 m','60 s','Explode up and out of the stance.',10),
+    'baseball:p':D('Fielding-position first step',5,1,'× 10 m','60 s','From finish position, break to first base.',10),
+    'track:sprint':D('Block or 3-point starts',5,1,'× 20 m','3 min','Push both feet hard, stay low for 6 to 8 steps.',20),
+    'track:400':D('Race-pace 200',2,1,'× 200 m','6 min','Hit your goal 400 pace through the curve.',200),
+    'track:hurdles':D('Starts over 2 hurdles',4,1,'reps','3 min','Attack hurdle 1 the same every time.',25),
+    'track:jumps':D('Short-approach jumps',5,1,'jumps','2 min','6 to 8 step approach, fast last 3 steps.',15),
+    'other:court':D('Lateral shuffle into a 5 m burst',4,2,'each side','60 s','Stay low, push off the outside foot.',5),
+    'other:field':D('Curved sprints',4,1,'× 25 m','2 min','Lean into the curve from the ankles.',25),
+    'other:gen':D('Reaction starts',5,1,'× 10 m','60 s','Start on a clap or a drop of a ball.',10)
+  };
+  var STR={
+    gym:[D('Trap bar or goblet squat jumps',3,4,'reps','90 s','Light weight, jump fast.'),D('Rear-foot split squats',3,6,'each leg','90 s','Slow down, strong up.'),D('Romanian deadlifts',3,6,'reps','90 s','Hips back, flat back.')],
+    hill:[D('Hill bounds',4,1,'× 20 m','walk back','Drive up the hill with big strides.',20),D('Split squats',3,8,'each leg','60 s',''),D('Single-leg glute bridges',3,10,'each leg','45 s','')],
+    field:[D('Split squat jumps',3,5,'each leg','60 s','Land soft and switch fast.'),D('Single-leg glute bridges',3,10,'each leg','45 s',''),D('Calf raises',3,15,'reps','30 s','Slow down, fast up.')],
+    home:[D('Split squat jumps',3,5,'each leg','60 s','Land soft and switch fast.'),D('Single-leg glute bridges',3,10,'each leg','45 s',''),D('Calf raises on a step',3,15,'reps','30 s','')]
+  };
+  function clone(d){return JSON.parse(JSON.stringify(d));}
+  function fmt(d){
+    var u=d.unit;
+    if(A.gear==='home'&&d.dist>20) u=u.replace(/\d+ m/,'20 m')+'*';
+    return (d.reps>1?d.sets+' × '+d.reps+' '+u:d.sets+' '+u).replace(/\s+/g,' ').trim();
+  }
+  function build(){
+    var focus=A.focus||'accel', key=A.sport+':'+A.sub, out=[], t=A.time||30;
+    var primer=A.season==='in'&&A.gd==='close';
+    var light=A.season==='in';
+    var nMain=primer?2:(t===30?2:t===45?3:4), nStr=primer?0:(t===30?1:t===45?2:3);
+    var main=(LIB[focus]||LIB.accel).map(clone);
+    if(focus==='accel'){ if(A.gear==='hill') main[3].n='Hill sprints'; else if(A.gear==='gym') main[3].n='Sled or band sprints'; else main.splice(3,1); }
+    main=main.slice(0,nMain);
+    if(A.sport==='track'&&focus==='end'&&A.gear==='home'){main=LIB.rep.map(clone).slice(0,nMain);}
+    main.forEach(function(d){if(light) d.sets=Math.max(2,d.sets-1); if(primer){d.sets=Math.min(d.sets,3); d.cue='About 90% effort. Sharp, not tiring.';}});
+    if(primer) main.push(D('Pogo jumps',2,10,'reps','45 s','Quick and bouncy, not tiring.'));
+    var sp=SPORT[key]?clone(SPORT[key]):null;
+    if(sp&&light) sp.sets=Math.max(2,sp.sets-1);
+    if(sp&&primer) sp=null;
+    if(sp&&A.gear==='home'&&sp.dist>25) sp=null;
+    var str=(STR[A.gear]||STR.field).map(clone).slice(0,nStr);
+    if(light) str.forEach(function(d){d.sets=2;});
+    if(focus==='jump') str=str.filter(function(d){return !/jump|bound/i.test(d.n);});
+
+    var wu={t:primer?8:(t===30?8:12),items:[]};
+    wu.items.push(A.gear==='home'?'Jog or skip in place, 3 min':'Easy jog, 400 m');
+    wu.items.push('Leg swings, 10 each way, front and side');
+    wu.items.push('Walking lunges with a reach, 10 each leg');
+    wu.items.push('A-skips and high knees, 2 × 15 m');
+    if(/basketball|soccer/.test(A.sport)||/court|field|lb|def|gk|if/.test(A.sub)||focus==='cod') wu.items.push('Lateral shuffles and carioca, 2 × 15 m each way');
+    wu.items.push('Build-ups, '+(primer?2:3)+' × '+(A.gear==='home'?'15':'30')+' m at 70 to 85%');
+    out.push({h:'Warm-up',t:wu.t+' min',list:wu.items});
+    out.push({h:primer?'Primer':LABEL[focus],t:'',drills:main});
+    if(sp) out.push({h:'For your '+(A.sport==='track'?'event':'position'),t:'',drills:[sp]});
+    if(str.length) out.push({h:A.gear==='gym'?'Strength':'Power and strength',t:'',drills:str});
+    out.push({h:'Cool-down',t:'5 min',list:['Walk 2 to 3 minutes','Stretch hip flexors, hamstrings, and calves, 30 s each']});
+    return out;
+  }
+  var LABEL={accel:'Acceleration',top:'Top speed',cod:'Change of direction',jump:'Explosive power',rep:'Repeat sprints',end:'Speed endurance',rhythm:'Hurdle rhythm'};
+  var TITLE={accel:'First-step day',top:'Top speed day',cod:'Agility day',jump:'Power day',rep:'Repeat sprint day',end:'Speed endurance day',rhythm:'Hurdle rhythm day'};
+  var SPL={track:'track',football:'football',soccer:'soccer',basketball:'basketball',baseball:'baseball',other:''};
+  function note(){
+    var n=[];
+    if(A.season==='in'&&A.gd==='close') n.push('With a '+(A.sport==='track'?'meet':'game')+' coming up, this is a short primer. It wakes the legs up without tiring them out.');
+    else if(A.season==='in') n.push('In season, the volume is lower so '+Y('you stay','they stay')+' fresh for '+(A.sport==='track'?'meets':'games')+'.');
+    else if(A.season==='pre') n.push('Preseason is the time to sharpen speed. Quality reps, full rest.');
+    else n.push('Off-season is the best time to build speed that lasts. Every rep at full effort with full rest.');
+    if(A.gear==='home') n.push('* Not much space? Run the longest straight line '+Y('you have','they have')+', up to 20 m.');
+    n.push('Film one rep and send it in, and we will tell '+Y('you','them')+' exactly what to fix.');
+    return n;
+  }
+  function totalMin(blocks){
+    if(A.season==='in'&&A.gd==='close') return 25;
+    return A.time||30;
+  }
+
+  /* ---------- render ---------- */
+  var el=document.getElementById('sday'), body=el.querySelector('.fbody'), bar=el.querySelector('.fprog span');
+  function opts(){var n=N[node]; return n.o();}
+  function step(){
+    var n=N[node], o=opts(), k=hist.length;
+    bar.style.width=Math.min(90,(k/(k+3))*100)+'%';
+    var h='<p class="fstep">Build a sample day · Question '+(k+1)+'</p><h3 class="fq" id="dq">'+esc(n.q())+'</h3><div class="fopts">';
+    o.forEach(function(x,i){h+='<button type="button" class="fopt" data-i="'+i+'">'+esc(x.l)+(x.s?'<small>'+esc(x.s)+'</small>':'')+'</button>';});
+    h+='</div>'+(k>0?'<button type="button" class="fback">&larr; Back</button>':'');
+    body.innerHTML=h; var b=body.querySelector('.fopt'); if(b) b.focus();
+  }
+  function choose(i){
+    var o=opts()[i]; hist.push({node:node,A:JSON.stringify(A),picks:picks.slice()});
+    var s=o.set||{}; for(var k in s) A[k]=s[k];
+    picks.push([N[node].q(),o.l]);
+    if(o.next){node=o.next;step();} else result();
+  }
+  function back(){if(!hist.length)return; var p=hist.pop(); node=p.node; A=JSON.parse(p.A); picks=p.picks; step();}
+  function result(){
+    bar.style.width='100%';
+    var blocks=build(), who=A.subl||'athlete', sp=SPL[A.sport];
+    var title=(A.season==='in'&&A.gd==='close'?'Pre-'+(A.sport==='track'?'meet':'game')+' primer':TITLE[A.focus]||'Speed day');
+    var h='<p class="fstep">'+Y('Your sample day','Sample day for your athlete')+'</p><h3 class="fplan" id="dq">'+esc(title)+'</h3>';
+    h+='<p class="dsub">For a '+esc((sp?sp+' ':'')+who)+'</p>';
+    h+='<div class="dchips"><span>'+totalMin(blocks)+' min</span><span>'+esc({in:'In season',pre:'Preseason',off:'Off-season'}[A.season])+'</span><span>'+esc({field:'Track or field',gym:'Field + weights',hill:'Field + hill',home:'Small space'}[A.gear])+'</span></div>';
+    blocks.forEach(function(b){
+      h+='<div class="dblk"><p class="dh">'+esc(b.h)+(b.t?' <span>· '+esc(b.t)+'</span>':'')+'</p>';
+      if(b.list){h+='<ul class="dlist">';b.list.forEach(function(x){h+='<li>'+esc(x)+'</li>';});h+='</ul>';}
+      if(b.drills){b.drills.forEach(function(d){h+='<div class="drow"><div class="dn">'+esc(d.n)+(d.cue?'<small>'+esc(d.cue)+'</small>':'')+'</div><div class="dd">'+esc(fmt(d))+(d.rest?'<small>rest '+esc(d.rest)+'</small>':'')+'</div></div>';});}
+      h+='</div>';
+    });
+    h+='<div class="dnote"><b>Coach note</b>';note().forEach(function(x){h+='<p>'+esc(x)+'</p>';});h+='</div>';
+    h+='<div class="dmore"><b>This is one day.</b> A full plan builds week by week, so '+Y('you keep','your athlete keeps')+' getting faster instead of repeating the same workout.</div>';
+    var lines=picks.map(function(x){return '- '+x[0]+' '+x[1];}).join('\n');
+    var mail='mailto:'+EMAIL+'?subject='+encodeURIComponent('Sample day: I want the full plan')+'&body='+encodeURIComponent('Hi Programmed4Speed,\n\nI built a sample day on your website ('+title+') and I want a full plan.\n\nMy answers:\n'+lines+'\n\nName:\nAge / grade:\nCurrent PRs or times:\n\nThanks!');
+    h+='<div class="facts"><a class="btn" href="'+mail+'">Get my full plan</a><a class="btn ghost" href="'+FORM+'" target="_blank" rel="noopener">Fill out the intake form</a></div>';
+    h+='<p class="fsmall">Free, no commitment. <button type="button" class="fre">Try different answers</button> · Warm up fully and stop if anything hurts.</p>';
+    body.innerHTML=h; el.querySelector('.fbox').scrollTop=0;
+    var b=body.querySelector('.btn'); if(b) b.focus({preventScroll:true});
+  }
+  function reset(){A={};hist=[];picks=[];node='who';step();}
+  body.addEventListener('click',function(e){
+    var o=e.target.closest('.fopt');
+    if(o){o.classList.add('on'); var i=+o.getAttribute('data-i'); setTimeout(function(){choose(i);},150); return;}
+    if(e.target.closest('.fback')){back();return;}
+    if(e.target.closest('.fre')){reset();return;}
+  });
+  function open(e){if(e)e.preventDefault(); var f=document.getElementById('finder'); if(f&&!f.hidden){f.hidden=true;} last=document.activeElement; el.hidden=false; document.body.classList.add('flock'); reset();}
+  function close(){el.hidden=true; document.body.classList.remove('flock'); if(last&&last.focus) last.focus();}
+  el.querySelector('.fx').addEventListener('click',close);
+  el.addEventListener('click',function(e){if(e.target===el) close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!el.hidden) close();});
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-day]'); if(a) open(e);});
+  if(location.hash==='#sample-day') open();
 })();
 </script>
 </body>
