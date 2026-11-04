@@ -299,6 +299,22 @@ body.flock{overflow:hidden}
 .navpay{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;background:#008CFF;color:#fff;padding:8px 12px;border-radius:4px;white-space:nowrap;margin-left:-6px}
 .navpay:hover{background:#1a98ff}
 @media (max-width:480px){.lane .wrap{gap:8px}.mark{font-size:12.5px}.navcta,.navpay{font-size:10.5px;letter-spacing:.03em;padding:7px 8px}.navpay{margin-left:-2px}}
+
+/* bundle */
+.bundle{margin-top:16px;background:linear-gradient(135deg,rgba(225,29,42,.16),transparent 60%),var(--surface);border:1px solid var(--red);border-radius:10px;padding:26px 24px}
+.bundle h4{font-family:var(--display);font-weight:800;font-size:22px;margin:8px 0 6px}
+.bundle>.best{color:var(--muted);margin:0 0 18px}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.bcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.bcard.pop{border:2px solid var(--red);box-shadow:0 16px 40px -22px rgba(225,29,42,.8)}
+.bcard .bn{font-family:var(--display);font-weight:800;font-size:16px}
+.bcard .bp{display:flex;align-items:baseline;gap:10px}
+.bcard .bp b{font-family:var(--display);font-weight:900;font-style:italic;font-size:42px;line-height:1}
+.bcard .bp s{color:var(--muted);font-size:18px}
+.bcard .save{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--red-ink)}
+.bcard .pick{margin-top:auto}
+.ticklist a{color:var(--red-ink)}
+@media (max-width:820px){.bgrid{grid-template-columns:1fr}}
 </style>
 
 </head>
@@ -418,9 +434,20 @@ body.flock{overflow:hidden}
             <li>Volume matched to your sport and season</li>
             <li>Vertical and broad jump testing at the start and end</li>
             <li>Works on its own or alongside any speed program</li>
+            <li><a href="#bundle">Bundle with a speed plan and save $10</a></li>
           </ul>
         </div>
       </article>
+      <div class="bundle" id="bundle" data-r>
+        <span class="tag">Speed + Power bundle</span>
+        <h4>Add Plyo Power to any speed plan and save $10</h4>
+        <p class="best">Plyo Power runs alongside your speed program, and the plan is adjusted so your total training load stays right.</p>
+        <div class="bgrid" data-stagger>
+          <div class="bcard"><div class="bn">3-Week Jumpstart + Plyo Power</div><div class="bp"><b>$45</b><s>$55</s></div><div class="save">You save $10</div><a class="btn pick" href="mailto:programmed4speed@gmail.com?subject=Interested%20in%20the%203-Week%20Jumpstart%20%2B%20Plyo%20Power%20bundle&amp;body=Hi%20Programmed4Speed%2C%0A%0AI%27m%20interested%20in%20the%203-Week%20Jumpstart%20%2B%20Plyo%20Power%20bundle%20%28%2445%29.%0A%0AName%3A%0AAge%20/%20grade%3A%0ASport%20and%20events%3A%0ACurrent%20PRs%3A%0AGoal%20or%20next%20big%20meet%3A%0AInstagram%20%28optional%29%3A%0A%0AThanks%21" data-plan="3-Week Jumpstart + Plyo Power">I want this bundle</a></div>
+          <div class="bcard pop"><span class="tag">Most popular</span><div class="bn">5-Week Builder + Plyo Power</div><div class="bp"><b>$64</b><s>$74</s></div><div class="save">You save $10</div><a class="btn pick" href="mailto:programmed4speed@gmail.com?subject=Interested%20in%20the%205-Week%20Builder%20%2B%20Plyo%20Power%20bundle&amp;body=Hi%20Programmed4Speed%2C%0A%0AI%27m%20interested%20in%20the%205-Week%20Builder%20%2B%20Plyo%20Power%20bundle%20%28%2464%29.%0A%0AName%3A%0AAge%20/%20grade%3A%0ASport%20and%20events%3A%0ACurrent%20PRs%3A%0AGoal%20or%20next%20big%20meet%3A%0AInstagram%20%28optional%29%3A%0A%0AThanks%21" data-plan="5-Week Builder + Plyo Power">I want this bundle</a></div>
+          <div class="bcard"><div class="bn">7-Week Full Speed + Plyo Power</div><div class="bp"><b>$80</b><s>$90</s></div><div class="save">You save $10</div><a class="btn pick" href="mailto:programmed4speed@gmail.com?subject=Interested%20in%20the%207-Week%20Full%20Speed%20%2B%20Plyo%20Power%20bundle&amp;body=Hi%20Programmed4Speed%2C%0A%0AI%27m%20interested%20in%20the%207-Week%20Full%20Speed%20%2B%20Plyo%20Power%20bundle%20%28%2480%29.%0A%0AName%3A%0AAge%20/%20grade%3A%0ASport%20and%20events%3A%0ACurrent%20PRs%3A%0AGoal%20or%20next%20big%20meet%3A%0AInstagram%20%28optional%29%3A%0A%0AThanks%21" data-plan="7-Week Full Speed + Plyo Power">I want this bundle</a></div>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -525,7 +552,7 @@ body.flock{overflow:hidden}
         <div><h4>I play football, soccer, or basketball. Is this for me?</h4><p>Yes. Acceleration, top speed, and jumping power carry into every sport, and your plan is written around your season.</p></div>
         <div><h4>Do I need a gym?</h4><p>No. Every session has a version you can do on a track, a field, or at home.</p></div>
         <div><h4>Which program should I pick?</h4><p>Meet in under a month: Jumpstart. Most athletes: the 5-Week Builder. Peaking for a big race: Full Speed. Want more explosiveness: add Plyo Power.</p></div>
-        <div><h4>Can I combine programs?</h4><p>Yes. Plyo Power runs alongside any speed program, and the plan is adjusted so your total training load stays right.</p></div>
+        <div><h4>Can I combine programs?</h4><p>Yes. Plyo Power runs alongside any speed program, and bundling it with a speed plan saves you $10. The plan is adjusted so your total training load stays right.</p></div>
         <div><h4>Can I upgrade later?</h4><p>Yes. Move to a longer program and pay only the difference.</p></div>
         <div><h4>Do you train in person?</h4><p>Limited in-person sessions are available on weekends in Tampa, FL. DM us to ask about times.</p></div>
       </div>
@@ -692,8 +719,8 @@ body.flock{overflow:hidden}
     if(k==='P'){why.push(GOAL.jump);why.push(SPORT[A.sport]);why=why.concat(p.why);}
     else {why.push(WHEN[A.when]);why.push(GOAL[A.goal]);why.push(SPORT[A.sport]);why.push(p.why[1]);}
     var add='';
-    if(k==='P' && A.when!=='soon'){add='<p class="fadd"><b>Want speed too?</b> Plyo Power runs alongside the 5-Week Builder, and the plan is adjusted so your total training load stays right.</p>';}
-    else if(k!=='P' && A.sport!=='track'){add='<p class="fadd"><b>Add-on idea:</b> pair it with 4-Week Plyo Power ($25) for a quicker first step and a higher vertical in your sport.</p>';}
+    if(k==='P' && A.when!=='soon'){add='<p class="fadd"><b>Want speed too?</b> Bundle Plyo Power with the 5-Week Builder for $64 and save $10. The plan is adjusted so your total training load stays right.</p>';}
+    else if(k!=='P' && A.sport!=='track'){add='<p class="fadd"><b>Bundle and save $10:</b> add 4-Week Plyo Power for just $15 more, for a quicker first step and a higher vertical in your sport.</p>';}
     var mail='mailto:'+EMAIL+'?subject='+encodeURIComponent('Interested in the '+p.n)+'&body='+encodeURIComponent('Hi Programmed4Speed,\n\nThe plan finder on your website matched me with the '+p.n+' ('+p.p+') and I am interested.\n\nMy answers:\n- Sport: '+label('sport')+'\n- Next big competition: '+label('when')+'\n- Main goal: '+label('goal')+'\n- Support: '+label('support')+'\n\nName:\nAge / grade:\nEvents or position:\nCurrent PRs:\n\nThanks!');
     var h='<p class="fstep">Your best fit</p><h3 class="fplan" id="fq">'+esc(p.n)+'</h3><div class="fprice">'+p.p+'</div><ul class="fwhy">';
     why.forEach(function(w){h+='<li><span>'+esc(w)+'</span></li>';});
