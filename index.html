@@ -346,6 +346,31 @@ body.flock{overflow:hidden}
 .daycta h4{font-family:var(--display);font-weight:900;font-style:italic;font-size:24px;margin:0 0 4px}
 .daycta p{margin:0;color:var(--muted);max-width:52ch}
 @media (max-width:520px){.drow{grid-template-columns:1fr}.dd{text-align:left}}
+
+/* coach */
+.coach{margin-top:26px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cstat,.cbody{background:var(--surface);padding:26px 24px}
+.cstat{background:linear-gradient(160deg,color-mix(in srgb,var(--red) 18%,var(--surface)),var(--surface) 70%)}
+.ck2{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red-ink)}
+.cbig{display:flex;align-items:baseline;gap:12px;margin:10px 0 4px;font-family:var(--display);font-weight:900;font-style:italic;line-height:1}
+.cbig span{font-size:clamp(40px,7vw,58px);color:var(--muted);text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.cbig i{font-style:normal;font-size:30px;color:var(--red)}
+.cbig b{font-size:clamp(56px,10vw,84px);color:var(--fg)}
+.csub{margin:0 0 20px;color:var(--muted)}
+.cbars{display:grid;gap:12px}
+.cbar{position:relative;height:30px;background:var(--bg);border-radius:6px;overflow:hidden}
+.cbar span{position:absolute;inset:0 auto 0 0;width:var(--w);background:color-mix(in srgb,var(--muted) 35%,var(--bg));border-radius:6px;transform-origin:left;animation:cgrow 1.2s cubic-bezier(.2,.8,.2,1) both}
+.cbar.on span{background:var(--red);box-shadow:0 0 14px color-mix(in srgb,var(--red) 50%,transparent)}
+.cbar em{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff}
+@keyframes cgrow{from{transform:scaleX(0)}}
+.cintro{margin:0 0 18px;font-size:17px;line-height:1.6}
+.cwins{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:12px}
+.cwins li{display:grid;grid-template-columns:22px 1fr;column-gap:10px}
+.cwins li::before{content:"";grid-row:span 2;width:10px;height:10px;margin-top:7px;border-radius:2px;background:var(--red);transform:rotate(45deg)}
+.cwins b{font-family:var(--display);font-weight:800;font-size:16px}
+.cwins span{color:var(--muted);font-size:14.5px;line-height:1.5}
+.cquote{margin:0;border-left:3px solid var(--red);padding:4px 0 4px 14px;font-style:italic;color:var(--fg);font-size:15.5px}
+@media (max-width:820px){.coach{grid-template-columns:1fr}}
 </style>
 
 </head>
@@ -400,6 +425,32 @@ body.flock{overflow:hidden}
   </div>
 
   <div class="wrap">
+    <section id="coach">
+      <p class="eyebrow" data-r>Meet your coach</p>
+      <h3 class="title" data-r>Built by a sprinter who did it himself</h3>
+      <div class="coach" data-r>
+        <div class="cstat">
+          <span class="ck2">100m progression</span>
+          <div class="cbig"><span>11.1</span><i aria-hidden="true">&rarr;</i><b>10.6</b></div>
+          <p class="csub">Half a second faster in two years</p>
+          <div class="cbars" aria-hidden="true">
+            <div class="cbar"><span style="--w:100%"></span><em>Then · 11.1</em></div>
+            <div class="cbar on"><span style="--w:62%"></span><em>2 years later · 10.6</em></div>
+          </div>
+        </div>
+        <div class="cbody">
+          <p class="cintro">Every program on this site is written by an NCAA Division II sprinter in the Sunshine State Conference. I went from an 11.1 to a 10.6 in the 100m by training the same way I write your plans: specific, simple, and built around the season.</p>
+          <ul class="cwins">
+            <li><b>Program-best 4x100 relay</b><span>Ran on a 41.49 relay that set a new program best as a college freshman</span></li>
+            <li><b>100m 10.6 · 200m 22.2 · 400m 51.0</b><span>Personal bests, plus 21-10 in the long jump</span></li>
+            <li><b>Two-time MVP Sprinter &amp; Jumper</b><span>Junior and senior seasons, and senior-year track captain</span></li>
+            <li><b>Two-sport athlete</b><span>Varsity football and track, so I know what speed looks like on the field, not just the track</span></li>
+          </ul>
+          <blockquote class="cquote">&ldquo;I write the plan I wish I had at 15. No guessing, no random workouts, just a clear path to getting faster.&rdquo;</blockquote>
+        </div>
+      </div>
+    </section>
+
     <section id="programs">
       <p class="eyebrow" data-r>Programs</p>
       <h3 class="title" data-r>Choose your program</h3>
