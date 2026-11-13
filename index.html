@@ -932,6 +932,7 @@ body.flock{overflow:hidden}
 <script>
 (function(){
   var EMAIL='programmed4speed@gmail.com', FORM='https://forms.gle/gU6GHiVvMSE6y1nh9';
+  var LEADS='https://docs.google.com/forms/d/e/1FAIpQLSc4OPyFYNuhalFWyOJPfIr98Pwj5y3-KiVcwVNaf6qT_f3Kow/formResponse';
   var A={}, hist=[], node='who', picks=[], last=null;
   function Y(a,b){return A.who&&A.who!=='athlete'?b:a;}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -1142,9 +1143,45 @@ body.flock{overflow:hidden}
     var o=opts()[i]; hist.push({node:node,A:JSON.stringify(A),picks:picks.slice()});
     var s=o.set||{}; for(var k in s) A[k]=s[k];
     picks.push([N[node].q(),o.l]);
-    if(o.next){node=o.next;step();} else result();
+    if(o.next){node=o.next;step();} else gate();
   }
   function back(){if(!hist.length)return; var p=hist.pop(); node=p.node; A=JSON.parse(p.A); picks=p.picks; step();}
+  function gate(){
+    var saved=null; try{saved=localStorage.getItem('p4s_lead');}catch(e){}
+    if(saved){ sendLead(JSON.parse(saved)); result(); return; }
+    bar.style.width='95%';
+    var h='<p class="fstep">Last step</p><h3 class="fq" id="dq">Your workout is ready! Who should we send training tips to?</h3>';
+    h+='<p class="dsub">Enter '+Y('your','your')+' name and an email or Instagram to see the workout. We only use it to check in on how training is going. No spam.</p>';
+    var st='width:100%;box-sizing:border-box;padding:14px 16px;margin:0 0 10px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;font:inherit;font-size:16px';
+    h+='<form class="dgate" novalidate>';
+    h+='<input name="nm" autocomplete="name" placeholder="'+Y('Your name','Your name (parent)')+'" style="'+st+'">';
+    h+='<input name="ct" autocomplete="email" placeholder="Email or @instagram" style="'+st+'">';
+    h+='<input name="ph" type="tel" autocomplete="tel" placeholder="Phone (optional)" style="'+st+'">';
+    h+='<p class="gerr" style="color:#ff6b6b;margin:0 0 10px;min-height:1em;font-size:14px"></p>';
+    h+='<button type="submit" class="btn">Show my workout</button></form>';
+    h+='<button type="button" class="fback">&larr; Back</button>';
+    body.innerHTML=h;
+    var f=body.querySelector('.dgate'); f.nm.focus();
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      var nm=f.nm.value.trim(), ct=f.ct.value.trim(), ph=f.ph.value.trim();
+      if(nm.length<2||ct.length<3){ body.querySelector('.gerr').textContent='Please add your name and an email or Instagram.'; return; }
+      var lead={nm:nm,ct:ct,ph:ph};
+      try{localStorage.setItem('p4s_lead',JSON.stringify(lead));}catch(e){}
+      sendLead(lead); result();
+    });
+  }
+  function sendLead(l){
+    try{
+      var fd=new URLSearchParams();
+      fd.append('entry.1144937763',l.nm); fd.append('entry.1434139318',l.ct); fd.append('entry.316539398',l.ph||'');
+      fd.append('entry.1409982726',A.who==='athlete'?'Athlete':(A.who==='parent'?'Parent':(A.who||'')));
+      fd.append('entry.2020079607',SPL[A.sport]||A.sport||'');
+      fd.append('entry.674701381',picks.map(function(x){return x[0]+' '+x[1];}).join('\n'));
+      fetch(LEADS,{method:'POST',mode:'no-cors',body:fd});
+      if(window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:'lead-sample-day',title:'Sample day lead',event:true});
+    }catch(e){}
+  }
   function result(){
     bar.style.width='100%';
     var blocks=build(), who=A.subl||'athlete', sp=SPL[A.sport];
