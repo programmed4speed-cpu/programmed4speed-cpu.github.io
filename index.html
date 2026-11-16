@@ -356,6 +356,24 @@ body.flock{overflow:hidden}
 .more .plans2{margin-bottom:16px}
 .more [data-r],.more [data-stagger]>*{opacity:1!important;transform:none!important}
 .intro a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+/* photos */
+.hero-shot{position:absolute;right:max(20px,env(safe-area-inset-right,0px));top:150px;width:300px;aspect-ratio:3/4;margin:0;z-index:0;pointer-events:none;clip-path:polygon(18% 0,100% 0,82% 100%,0 100%);overflow:hidden}
+.hero-shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:grayscale(1) contrast(1.25) brightness(.85);display:block}
+.hero-shot::before{content:"";position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:.55;z-index:1}
+.hero-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,15,0) 45%,var(--bg) 100%),linear-gradient(90deg,var(--bg) 0,rgba(12,12,15,0) 30%);z-index:2}
+.hero .hero-inner{position:relative;z-index:1}
+@media (max-width:900px){.hero-shot{display:none}}
+.sports{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.sport{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.sport img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.15) brightness(.8);transform:scale(1.04);transition:filter .5s,transform .6s}
+.sport::before{content:"";position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:.45;z-index:1;transition:opacity .5s}
+.sport::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,15,0) 40%,rgba(12,12,15,.92) 100%);z-index:2}
+.sport figcaption{position:absolute;left:16px;right:16px;bottom:14px;z-index:3;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(18px,2.2vw,26px);letter-spacing:-.01em;line-height:1}
+.sport figcaption span{display:block;font-family:var(--mono);font-style:normal;font-weight:400;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
+.sport:hover img{filter:grayscale(0) contrast(1.05) brightness(.9);transform:scale(1)}
+.sport:hover::before{opacity:0}
+@media (max-width:700px){.sports{grid-template-columns:repeat(2,1fr)}.sport{aspect-ratio:4/5}}
 </style>
 
 </head>
@@ -378,6 +396,7 @@ body.flock{overflow:hidden}
 
 <main id="top">
   <div class="wrap hero">
+    <figure class="hero-shot" aria-hidden="true"><img src="https://images.unsplash.com/photo-1526676317768-d9b14f15615a?w=700&q=70&auto=format&fit=crop" alt="" loading="eager"></figure>
     <div class="streaks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="hero-inner">
       <div class="speed" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -410,6 +429,17 @@ body.flock{overflow:hidden}
   </div>
 
   <div class="wrap">
+    <section>
+      <p class="eyebrow" data-r>Every sport</p>
+      <h3 class="title" data-r>Built for the way your sport moves</h3>
+      <div class="sports" data-r>
+        <figure class="sport"><img src="assets/reel/football.jpg" alt="Football player running with the ball" loading="lazy" style="object-position:58% 40%"><figcaption>Football<span>First step + burst</span></figcaption></figure>
+        <figure class="sport"><img src="assets/reel/basketball.jpg" alt="Basketball player going up for a shot" loading="lazy" style="object-position:72% 50%"><figcaption>Basketball<span>Quickness + bounce</span></figcaption></figure>
+        <figure class="sport"><img src="assets/reel/soccer.jpg" alt="Soccer players racing for the ball" loading="lazy" style="object-position:55% 50%"><figcaption>Soccer<span>Acceleration + repeat sprints</span></figcaption></figure>
+        <figure class="sport"><img src="assets/reel/baseball.jpg" alt="Baseball runner sliding into a base" loading="lazy" style="object-position:55% 50%"><figcaption>Baseball<span>Steals + baserunning</span></figcaption></figure>
+      </div>
+    </section>
+
     <section id="programs">
       <p class="eyebrow" data-r>Programs</p>
       <h3 class="title" data-r>Start with one of two plans</h3>
