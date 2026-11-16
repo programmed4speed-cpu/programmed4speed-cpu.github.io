@@ -375,6 +375,15 @@ body.flock{overflow:hidden}
 .sport:hover img{filter:grayscale(0) contrast(1.05) brightness(.9);transform:scale(1)}
 .sport:hover::before{opacity:0}
 @media (max-width:700px){.sports{grid-template-columns:repeat(2,1fr)}.sport{aspect-ratio:4/5}}
+
+a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
+.sport .sport-cap{position:absolute;left:16px;right:16px;bottom:14px;z-index:3;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(18px,2.2vw,26px);letter-spacing:-.01em;line-height:1;transition:transform .35s}
+.sport .sport-cap span{display:block;font-family:var(--mono);font-style:normal;font-weight:400;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
+.sport-go{position:absolute;left:16px;right:16px;bottom:14px;z-index:3;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.sport:hover .sport-cap,.sport:focus-visible .sport-cap{transform:translateY(-22px)}
+.sport:hover .sport-go,.sport:focus-visible .sport-go{opacity:1;transform:none}
+.sport:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+@media (hover:none){.sport .sport-cap{transform:translateY(-22px)}.sport-go{opacity:1;transform:none}}
 </style>
 
 </head>
@@ -434,10 +443,10 @@ body.flock{overflow:hidden}
       <p class="eyebrow" data-r>Every sport</p>
       <h3 class="title" data-r>Built for the way your sport moves</h3>
       <div class="sports" data-r>
-        <figure class="sport"><img src="https://images.unsplash.com/photo-1761258771974-d4b673e424ab?w=600&q=70&auto=format&fit=crop" alt="Football player running with the ball toward the camera" loading="lazy" style="object-position:50% 30%"><figcaption>Football<span>First step + burst</span></figcaption></figure>
-        <figure class="sport"><img src="assets/reel/basketball.jpg" alt="Basketball player going up for a shot" loading="lazy" style="object-position:72% 50%"><figcaption>Basketball<span>Quickness + bounce</span></figcaption></figure>
-        <figure class="sport"><img src="assets/reel/soccer.jpg" alt="Soccer players racing for the ball" loading="lazy" style="object-position:55% 50%"><figcaption>Soccer<span>Acceleration + repeat sprints</span></figcaption></figure>
-        <figure class="sport"><img src="assets/reel/baseball.jpg" alt="Baseball runner sliding into a base" loading="lazy" style="object-position:55% 50%"><figcaption>Baseball<span>Steals + baserunning</span></figcaption></figure>
+        <a class="sport" href="#sample-day" data-sport="football" data-sport-label="Football" aria-label="Get a free football workout"><img src="https://images.unsplash.com/photo-1761258771974-d4b673e424ab?w=600&q=70&auto=format&fit=crop" alt="Football player running with the ball toward the camera" loading="lazy" style="object-position:50% 30%"><span class="sport-cap">Football<span>First step + burst</span></span><span class="sport-go">Free football workout &rarr;</span></a>
+        <a class="sport" href="#sample-day" data-sport="basketball" data-sport-label="Basketball" aria-label="Get a free basketball workout"><img src="assets/reel/basketball.jpg" alt="Basketball player going up for a shot" loading="lazy" style="object-position:72% 50%"><span class="sport-cap">Basketball<span>Quickness + bounce</span></span><span class="sport-go">Free basketball workout &rarr;</span></a>
+        <a class="sport" href="#sample-day" data-sport="soccer" data-sport-label="Soccer" aria-label="Get a free soccer workout"><img src="assets/reel/soccer.jpg" alt="Soccer players racing for the ball" loading="lazy" style="object-position:55% 50%"><span class="sport-cap">Soccer<span>Acceleration + repeat sprints</span></span><span class="sport-go">Free soccer workout &rarr;</span></a>
+        <a class="sport" href="#sample-day" data-sport="baseball" data-sport-label="Baseball or softball" aria-label="Get a free baseball workout"><img src="assets/reel/baseball.jpg" alt="Baseball runner sliding into a base" loading="lazy" style="object-position:55% 50%"><span class="sport-cap">Baseball<span>Steals + baserunning</span></span><span class="sport-go">Free baseball workout &rarr;</span></a>
       </div>
     </section>
 
@@ -1216,7 +1225,7 @@ body.flock{overflow:hidden}
   function choose(i){
     var o=opts()[i]; hist.push({node:node,A:JSON.stringify(A),picks:picks.slice()});
     var s=o.set||{}; for(var k in s) A[k]=s[k];
-    picks.push([N[node].q(),o.l]);
+    picks.push([N[node].q(),o.l]);if(node==='who'&&window.p4sSport){var sp=window.p4sSport;window.p4sSport=null;A.sport=sp.k;picks.push([N.sport.q(),sp.l]);node=SPORTNEXT[sp.k];step();return;}
     if(o.next){node=o.next;step();} else gate();
   }
   function back(){if(!hist.length)return; var p=hist.pop(); node=p.node; A=JSON.parse(p.A); picks=p.picks; step();}
@@ -1384,6 +1393,10 @@ body.flock{overflow:hidden}
   form.onsubmit=function(e){e.preventDefault();var v=inp.value.trim();if(!v)return;inp.value='';ask(v)};
   document.addEventListener('keydown',function(e){if(e.key==='Escape')box.classList.remove('open')});
 })();
+</script>
+<script>
+document.addEventListener('click',function(e){var s=e.target.closest('a.sport[data-sport]');if(s){e.preventDefault();e.stopPropagation();window.p4sSport={k:s.getAttribute('data-sport'),l:s.getAttribute('data-sport-label')};var d=document.querySelector('a[data-day]');if(d){d.click()}else{location.hash='#sample-day'}return;} if(e.target.closest('[data-day]')&&!e.isTrusted===false){} },true);
+document.addEventListener('click',function(e){if(e.isTrusted&&e.target.closest('[data-day]')&&!e.target.closest('a.sport'))window.p4sSport=null;},true);
 </script>
 </body>
 </html>
