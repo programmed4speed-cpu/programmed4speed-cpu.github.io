@@ -618,7 +618,7 @@ body.flock{overflow:hidden}
         <div><h4>I play football, soccer, or basketball. Is this for me?</h4><p>Yes. Acceleration, top speed, and jumping power carry into every sport, and your plan is written around your season.</p></div>
         <div><h4>Do I need a gym?</h4><p>No. Every session has a version you can do on a track, a field, or at home.</p></div>
         <div><h4>Which program should I pick?</h4><p>Meet in under a month: Jumpstart. Most athletes: the 5-Week Builder. Peaking for a big race: Full Speed. Want more explosiveness: add Plyo Power.</p></div>
-        <div><h4>Can I combine programs?</h4><p>Yes. Plyo Power runs alongside any speed program, and bundling it with a speed plan saves you $10. The plan is adjusted so your total training load stays right.</p></div>
+        <div><h4>Can I combine programs?</h4><p>Yes. Plyo Power runs alongside any speed program. The plan is adjusted so your total training load stays right.</p></div>
         <div><h4>Can I upgrade later?</h4><p>Yes. Move to a longer program and pay only the difference.</p></div>
         <div><h4>Do you train in person?</h4><p>Limited in-person sessions are available on weekends in Tampa, FL. DM us to ask about times.</p></div>
       </div>
@@ -1261,6 +1261,97 @@ body.flock{overflow:hidden}
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!el.hidden) close();});
   document.addEventListener('click',function(e){var a=e.target.closest('[data-day]'); if(a) open(e);});
   if(location.hash==='#sample-day') open();
+})();
+</script>
+<!-- P4S chat assistant (rule-based, no external services) -->
+<style>
+#p4s-chat-btn{position:fixed;right:18px;bottom:18px;z-index:90;width:58px;height:58px;border-radius:50%;border:0;background:var(--red,#e11d2a);color:#fff;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.45);display:grid;place-items:center;transition:transform .2s}
+#p4s-chat-btn:hover{transform:scale(1.06)}
+#p4s-chat-btn svg{width:26px;height:26px}
+#p4s-chat-btn .dot{position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--red,#e11d2a)}
+#p4s-chat{position:fixed;right:18px;bottom:88px;z-index:91;width:360px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 120px);background:var(--surface,#16161b);border:1px solid var(--line,#2a2a31);border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;font-family:var(--body,Lato,system-ui,sans-serif);color:var(--fg,#f4f4f6)}
+#p4s-chat.open{display:flex}
+#p4s-chat header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line,#2a2a31);background:#111115}
+#p4s-chat header .av{width:34px;height:34px;border-radius:50%;background:var(--red,#e11d2a);display:grid;place-items:center;font-family:var(--display,Montserrat,sans-serif);font-weight:800;font-style:italic;font-size:12px}
+#p4s-chat header b{display:block;font-size:15px;line-height:1.1}
+#p4s-chat header span{font-size:12px;color:var(--muted,#a3a3ad)}
+#p4s-chat header button{margin-left:auto;background:none;border:0;color:var(--muted,#a3a3ad);font-size:22px;cursor:pointer;line-height:1}
+#p4s-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.p4s-m{max-width:86%;padding:10px 13px;border-radius:14px;font-size:14.5px;line-height:1.45;white-space:pre-line}
+.p4s-m.bot{background:#202027;border-top-left-radius:4px}
+.p4s-m.me{background:var(--red,#e11d2a);color:#fff;align-self:flex-end;border-top-right-radius:4px}
+.p4s-m a{color:#ff6b74;font-weight:700}
+.p4s-chips{display:flex;flex-wrap:wrap;gap:7px}
+.p4s-chips button{background:transparent;border:1px solid var(--line,#2a2a31);color:var(--fg,#f4f4f6);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+.p4s-chips button:hover{border-color:var(--red,#e11d2a);color:#fff}
+#p4s-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line,#2a2a31)}
+#p4s-form input{flex:1;min-width:0;background:#0f0f13;border:1px solid var(--line,#2a2a31);color:var(--fg,#f4f4f6);border-radius:10px;padding:10px 12px;font-size:15px;font-family:inherit}
+#p4s-form button{background:var(--red,#e11d2a);border:0;color:#fff;border-radius:10px;padding:0 14px;font-weight:700;cursor:pointer}
+@media (max-width:520px){#p4s-chat{right:8px;left:8px;width:auto;max-width:none;bottom:84px;height:70vh}#p4s-chat-btn{right:14px;bottom:14px}}
+</style>
+<button id="p4s-chat-btn" aria-label="Open chat with Programmed4Speed"><span class="dot"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
+<div id="p4s-chat" role="dialog" aria-label="Programmed4Speed chat">
+  <header><div class="av">P4S</div><div><b>Programmed4Speed</b><span>Usually replies instantly</span></div><button aria-label="Close chat">&times;</button></header>
+  <div id="p4s-log" aria-live="polite"></div>
+  <form id="p4s-form" autocomplete="off"><input id="p4s-in" placeholder="Ask a question..." aria-label="Your question"><button type="submit">Send</button></form>
+</div>
+<script>
+(function(){
+  var PHONE='813-485-6142', EMAIL='programmed4speed@gmail.com', FORM='https://forms.gle/gU6GHiVvMSE6y1nh9';
+  var btn=document.getElementById('p4s-chat-btn'), box=document.getElementById('p4s-chat'), log=document.getElementById('p4s-log'), form=document.getElementById('p4s-form'), inp=document.getElementById('p4s-in');
+  var MAIN=['Which program is right for me?','Prices','Free workout','How does it work?','Is it for my sport?','Talk to a coach'];
+  function goTo(hash){var a=document.querySelector('a[href="'+hash+'"]'); box.classList.remove('open'); if(a){a.click()} else {location.hash=hash}}
+  window.p4sGo=goTo;
+  var A={
+    programs:"We have 4 plans, all written for your sport after a short intake:\n\n\u2022 Jumpstart: 3 weeks, $30. Best if a big game or meet is under a month away.\n\u2022 5-Week Builder: $49. Our most popular, for most athletes.\n\u2022 Full Speed: 7 weeks, $65. The full progression with weekly check-ins.\n\u2022 4-Week Plyo Power: $25. Jump higher and get more explosive. Runs alongside any speed plan.\n\nNot sure? <a href=\"#finder\" onclick=\"p4sGo('#finder');return false\">Take the 30-second quiz</a>.",
+    prices:"\u2022 Jumpstart (3 weeks): $30\n\u2022 5-Week Builder: $49\n\u2022 Full Speed (7 weeks): $65\n\u2022 4-Week Plyo Power: $25\n\u2022 Film review: $10 per clip\n\nYou can upgrade to a longer plan later and only pay the difference.",
+    free:"Yes! Answer a few quick questions and you get one workout written for your sport and position, free. Takes about 30 seconds.\n\n<a href=\"#sample-day\" onclick=\"p4sGo('#sample-day');return false\">Build my free workout</a>",
+    how:"1. Pick a program\n2. Fill out the <a href=\""+FORM+"\" target=\"_blank\" rel=\"noopener\">intake form</a> (about 3 minutes: your sport, position, schedule and any injuries)\n3. We confirm your plan and payment options with you\n4. Your custom plan arrives within 48 hours\n\nThe program is fully typed out, day by day, and you can text us questions any time during the weeks.",
+    sport:"Yes. We train athletes in every sport: football, basketball, soccer, volleyball, baseball, softball, lacrosse, track and more. Your plan is built around your sport, your position and your season, so it fits around team practice.",
+    gym:"No gym needed. Every session has a version you can do on a track, a field, or at home with a few cones (shoes or water bottles work too).",
+    pay:"After you fill out the intake form, we reach out to confirm your plan and go over payment options with you directly. Nothing is charged online.",
+    format:"Your program is fully typed out, day by day: every exercise, sets, reps, rest and coaching cues, plus progress tests at the start and end. It's not a video course. If you have questions during the weeks, text us at "+PHONE+".",
+    time:"Your custom plan is ready within 48 hours of your intake form coming in.",
+    film:"Send your clips and get them broken down: $10 per video, with a discount when you send multiple clips. Film from the side at hip height if you can. Email them to <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a> or DM us on Instagram.",
+    person:"We offer limited in-person sessions on weekends in Tampa, FL. Text "+PHONE+" or DM <a href=\"https://www.instagram.com/programmed4speed/\" target=\"_blank\" rel=\"noopener\">@programmed4speed</a> to ask about times.",
+    combine:"Yes. Plyo Power runs alongside any speed program, and your plan is adjusted so your total training load stays right. You can also upgrade to a longer plan later and pay only the difference.",
+    age:"Our plans are built for youth and high school athletes (and older). Put your age and grade on the intake form so the workload fits you.",
+    jump:"For a higher vertical, check out the 4-Week Plyo Power ($25): landing mechanics, pogos, bounds and box rebounds, with vertical and broad jump tests at the start and end. It works on its own or alongside a speed plan.",
+    injury:"Note any injuries on the intake form and your plan will be written around them. If something actually hurts during training (not just tired), stop and check in with a parent or doctor. For anything specific, text "+PHONE+".",
+    coaches:"Coaches: grab our free acceleration day warm-up. It's printable and works for a whole team, any sport, no equipment. <a href=\"#top\" onclick=\"var a=document.querySelector('a[href*=warmup]');if(a){a.click()}return false\">Get the warm-up</a>",
+    contact:"Happy to help! Text or call <b>"+PHONE+"</b>, email <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a>, or DM <a href=\"https://www.instagram.com/programmed4speed/\" target=\"_blank\" rel=\"noopener\">@programmed4speed</a>. We get back to you within 24 hours."
+  };
+  var RULES=[
+    [/(price|cost|how much|\$|expensive|cheap|pay for)/i,'prices'],
+    [/(pay|payment|venmo|card|cash|zelle|paypal)/i,'pay'],
+    [/(free|sample|trial|try)/i,'free'],
+    [/(which|best|recommend|right for|should i|pick|choose|program|plan)/i,'programs'],
+    [/(how (does|do) (it|this) work|process|steps|get started|start|sign ?up|intake)/i,'how'],
+    [/(video|typed|pdf|format|what do i get|look like|app)/i,'format'],
+    [/(how long|when|48|deliver|ready|receive)/i,'time'],
+    [/(gym|equipment|home|weights|cones)/i,'gym'],
+    [/(film|clip|footage|analy|review)/i,'film'],
+    [/(person|tampa|local|meet up|1 ?on ?1|private|session)/i,'person'],
+    [/(combine|bundle|both|upgrade|switch)/i,'combine'],
+    [/(age|old|grade|middle school|years)/i,'age'],
+    [/(jump|vertical|dunk|plyo|explosive)/i,'jump'],
+    [/(injur|hurt|pain|sore|knee|ankle|hamstring)/i,'injury'],
+    [/(coach|team|warm ?up)/i,'coaches'],
+    [/(football|basketball|soccer|volleyball|baseball|softball|lacrosse|track|tennis|hockey|wrestl|rugby|sport|position)/i,'sport'],
+    [/(contact|phone|text|call|email|talk|human|person|question)/i,'contact']
+  ];
+  var CHIP={'Which program is right for me?':'programs','Prices':'prices','Free workout':'free','How does it work?':'how','Is it for my sport?':'sport','Talk to a coach':'contact'};
+  function add(html,who){var d=document.createElement('div');d.className='p4s-m '+who;if(who==='me'){d.textContent=html}else{d.innerHTML=html}log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+  function chips(list){var w=document.createElement('div');w.className='p4s-chips';list.forEach(function(l){var b=document.createElement('button');b.type='button';b.textContent=l;b.onclick=function(){w.remove();ask(l,CHIP[l])};w.appendChild(b)});log.appendChild(w);log.scrollTop=log.scrollHeight}
+  function reply(key){setTimeout(function(){add(A[key],'bot');var rest=MAIN.filter(function(l){return CHIP[l]!==key}).slice(0,4);chips(rest)},350)}
+  function ask(text,key){log.querySelectorAll('.p4s-chips').forEach(function(c){c.remove()});add(text,'me');if(!key){for(var i=0;i<RULES.length;i++){if(RULES[i][0].test(text)){key=RULES[i][1];break}}}
+    if(key){reply(key)}else{setTimeout(function(){add("Good question! For that one it's best to reach us directly: text <b>"+PHONE+"</b> or email <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a>. We reply within 24 hours.",'bot');chips(MAIN.slice(0,4))},350)}}
+  var started=false;
+  function open(){box.classList.add('open');var dot=btn.querySelector('.dot');if(dot)dot.remove();if(!started){started=true;add("Hey! \ud83d\udc4b I can answer questions about our speed and jump programs. What can I help with?",'bot');chips(MAIN)}setTimeout(function(){inp.focus()},50)}
+  btn.onclick=function(){box.classList.contains('open')?box.classList.remove('open'):open()};
+  box.querySelector('header button').onclick=function(){box.classList.remove('open')};
+  form.onsubmit=function(e){e.preventDefault();var v=inp.value.trim();if(!v)return;inp.value='';ask(v)};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')box.classList.remove('open')});
 })();
 </script>
 </body>
