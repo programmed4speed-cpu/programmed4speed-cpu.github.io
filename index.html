@@ -358,12 +358,13 @@ body.flock{overflow:hidden}
 .intro a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
 /* photos */
-.hero-shot{position:absolute;right:max(20px,env(safe-area-inset-right,0px));top:150px;width:300px;aspect-ratio:3/4;margin:0;z-index:0;pointer-events:none;clip-path:polygon(18% 0,100% 0,82% 100%,0 100%);overflow:hidden}
-.hero-shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:grayscale(1) contrast(1.25) brightness(.85);display:block}
-.hero-shot::before{content:"";position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:.55;z-index:1}
-.hero-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,15,0) 45%,var(--bg) 100%),linear-gradient(90deg,var(--bg) 0,rgba(12,12,15,0) 30%);z-index:2}
+.hero-shot{position:absolute;top:0;bottom:0;right:calc(50% - 50vw);left:auto;width:min(62vw,900px);aspect-ratio:auto;margin:0;z-index:0;pointer-events:none;clip-path:none;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 42%),linear-gradient(180deg,#000 72%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 42%),linear-gradient(180deg,#000 72%,transparent 100%);mask-composite:intersect}
+.hero-shot img{width:100%;height:100%;object-fit:cover;object-position:50% 38%;filter:grayscale(1) contrast(1.3) brightness(.8);display:block}
+.hero-shot::before{content:"";position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:.6;z-index:1}
+.hero-shot::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 30%,rgba(12,12,15,0) 40%,rgba(12,12,15,.55) 100%);z-index:2}
+@media (max-width:900px){.hero-shot{display:block;width:100vw;right:calc(50% - 50vw);opacity:.32;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}}
 .hero .hero-inner{position:relative;z-index:1}
-@media (max-width:900px){.hero-shot{display:none}}
+
 .sports{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
 .sport{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
 .sport img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.15) brightness(.8);transform:scale(1.04);transition:filter .5s,transform .6s}
@@ -396,7 +397,7 @@ body.flock{overflow:hidden}
 
 <main id="top">
   <div class="wrap hero">
-    <figure class="hero-shot" aria-hidden="true"><img src="https://images.unsplash.com/photo-1526676317768-d9b14f15615a?w=700&q=70&auto=format&fit=crop" alt="" loading="eager"></figure>
+    <figure class="hero-shot" aria-hidden="true"><img src="https://images.unsplash.com/photo-1526676317768-d9b14f15615a?w=1400&q=70&auto=format&fit=crop" style="object-position:50% 18%" alt="" loading="eager"></figure>
     <div class="streaks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="hero-inner">
       <div class="speed" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -433,7 +434,7 @@ body.flock{overflow:hidden}
       <p class="eyebrow" data-r>Every sport</p>
       <h3 class="title" data-r>Built for the way your sport moves</h3>
       <div class="sports" data-r>
-        <figure class="sport"><img src="assets/reel/football.jpg" alt="Football player running with the ball" loading="lazy" style="object-position:58% 40%"><figcaption>Football<span>First step + burst</span></figcaption></figure>
+        <figure class="sport"><img src="https://images.unsplash.com/photo-1761258771974-d4b673e424ab?w=600&q=70&auto=format&fit=crop" alt="Football player running with the ball toward the camera" loading="lazy" style="object-position:50% 30%"><figcaption>Football<span>First step + burst</span></figcaption></figure>
         <figure class="sport"><img src="assets/reel/basketball.jpg" alt="Basketball player going up for a shot" loading="lazy" style="object-position:72% 50%"><figcaption>Basketball<span>Quickness + bounce</span></figcaption></figure>
         <figure class="sport"><img src="assets/reel/soccer.jpg" alt="Soccer players racing for the ball" loading="lazy" style="object-position:55% 50%"><figcaption>Soccer<span>Acceleration + repeat sprints</span></figcaption></figure>
         <figure class="sport"><img src="assets/reel/baseball.jpg" alt="Baseball runner sliding into a base" loading="lazy" style="object-position:55% 50%"><figcaption>Baseball<span>Steals + baserunning</span></figcaption></figure>
