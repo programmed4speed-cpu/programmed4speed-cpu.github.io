@@ -391,6 +391,24 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
 @media (hover:none){.sport .sport-cap{transform:translateY(-22px)}.sport-go{opacity:1;transform:none}}
 </style>
 
+<style>
+.navpay{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#fff;border:1px solid var(--red);padding:7px 12px;border-radius:4px;white-space:nowrap;margin-right:-6px;transition:background .2s}
+.navpay:hover{background:rgba(225,29,42,.15)}
+@media (max-width:480px){.navpay{font-size:10.5px;letter-spacing:.03em;padding:7px 8px;margin-right:-2px}}
+.pbox{width:min(600px,100%)}
+.pnote{margin:0 0 6px;color:var(--muted);font-size:15px}
+.pnote a{color:var(--fg)}
+.pgroup{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
+.prow{display:flex;align-items:center;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:10px;transition:border-color .2s}
+.prow:hover{border-color:var(--red)}
+.pinfo{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.prow .ck{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-ink)}
+.pname{font-family:var(--display);font-weight:800;font-size:clamp(15px,4.2vw,19px)}
+.pdesc{color:var(--muted);font-size:13.5px;line-height:1.35}
+.ppay{flex:0 0 auto;padding:11px 16px;white-space:nowrap}
+.psecure{margin:16px 0 0;color:var(--muted);font-size:12.5px;text-align:center}
+@media (max-width:480px){.prow{flex-direction:column;align-items:stretch}.ppay{text-align:center}}
+</style>
 </head>
 <body>
 <div class="glow" aria-hidden="true"></div>
@@ -404,6 +422,7 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
       <div class="runner"></div>
       <div class="ticks"><span>0m</span><span>10m</span><span>30m</span><span>60m</span><span>100m</span></div>
     </div>
+    <a class="navpay" href="#pay" data-pay>Pay</a>
     <a class="navcta" href="#finder" data-finder>Get started</a>
     <a class="navcontact" href="#contact" data-contact>Contact</a>
   </div>
@@ -1402,6 +1421,35 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
 <script>
 document.addEventListener('click',function(e){var s=e.target.closest('a.sport[data-sport]');if(s){e.preventDefault();e.stopPropagation();window.p4sSport={k:s.getAttribute('data-sport'),l:s.getAttribute('data-sport-label')};var d=document.querySelector('a[data-day]');if(d){d.click()}else{location.hash='#sample-day'}return;} if(e.target.closest('[data-day]')&&!e.isTrusted===false){} },true);
 document.addEventListener('click',function(e){if(e.isTrusted&&e.target.closest('[data-day]')&&!e.target.closest('a.sport'))window.p4sSport=null;},true);
+</script>
+<div class="finder" id="pay" hidden role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="fbox pbox">
+    <button class="fx" type="button" aria-label="Close">&times;</button>
+    <p class="fstep">Payments</p>
+    <h3 class="fq" id="ptitle">Pay for your program</h3>
+    <p class="pnote">New here? <a href="https://forms.gle/gU6GHiVvMSE6y1nh9" target="_blank" rel="noopener">Fill out the intake form</a> first so your program is built around your athlete. Programs are delivered within 48 hours of the intake form.</p>
+    <p class="pgroup">Custom programs</p>
+      <div class="prow"><div class="pinfo"><span class="ck">3 weeks</span><span class="pname">3-Week Jumpstart</span><span class="pdesc">Starts and acceleration</span></div><a class="btn ppay" href="https://buy.stripe.com/aFa7sL9Ky9zoczs8CH5EY01" target="_blank" rel="noopener">Pay $30</a></div>
+      <div class="prow"><div class="pinfo"><span class="ck">5 weeks</span><span class="pname">5-Week Builder</span><span class="pdesc">Speed, agility and power</span></div><a class="btn ppay" href="https://buy.stripe.com/9B67sL5uiaDs7f8dX15EY00" target="_blank" rel="noopener">Pay $49</a></div>
+      <div class="prow"><div class="pinfo"><span class="ck">7 weeks</span><span class="pname">7-Week Full Speed</span><span class="pdesc">The complete program, start to top speed</span></div><a class="btn ppay" href="https://buy.stripe.com/28E7sL09YdPEczs1af5EY02" target="_blank" rel="noopener">Pay $65</a></div>
+      <div class="prow"><div class="pinfo"><span class="ck">4 weeks</span><span class="pname">4-Week Plyo Power</span><span class="pdesc">Explosive jumps and first-step power</span></div><a class="btn ppay" href="https://buy.stripe.com/28EcN509YcLA8jcbOT5EY03" target="_blank" rel="noopener">Pay $25</a></div>
+    <p class="pgroup">Film review</p>
+      <div class="prow"><div class="pinfo"><span class="ck">1 clip</span><span class="pname">Film Review</span><span class="pdesc">One clip broken down with specific fixes</span></div><a class="btn ppay" href="https://buy.stripe.com/14AdR9e0O12S7f83in5EY04" target="_blank" rel="noopener">Pay $10</a></div>
+      <div class="prow"><div class="pinfo"><span class="ck">3 clips</span><span class="pname">Film Review Bundle</span><span class="pdesc">Three clips broken down with specific fixes</span></div><a class="btn ppay" href="https://buy.stripe.com/00w8wP2i6bHw6b43in5EY05" target="_blank" rel="noopener">Pay $20</a></div>
+    <p class="psecure">Secure checkout by Stripe. Cards, Apple Pay and more. Questions? Text (813) 485-6142.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('pay'), last=null;
+  function open(e){if(e)e.preventDefault(); last=document.activeElement; el.hidden=false; document.body.classList.add('flock'); var b=el.querySelector('.fx'); if(b) b.focus();}
+  function close(){el.hidden=true; document.body.classList.remove('flock'); if(last&&last.focus) last.focus();}
+  el.querySelector('.fx').addEventListener('click',close);
+  el.addEventListener('click',function(e){if(e.target===el) close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!el.hidden) close();});
+  [].forEach.call(document.querySelectorAll('[data-pay]'),function(a){a.addEventListener('click',open);});
+  if(location.hash==='#pay') open();
+})();
 </script>
 </body>
 </html>
