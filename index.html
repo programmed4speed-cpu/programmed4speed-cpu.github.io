@@ -1363,20 +1363,28 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
 (function(){
   var PHONE='813-485-6142', EMAIL='programmed4speed@gmail.com', FORM='https://forms.gle/gU6GHiVvMSE6y1nh9';
   var btn=document.getElementById('p4s-chat-btn'), box=document.getElementById('p4s-chat'), log=document.getElementById('p4s-log'), form=document.getElementById('p4s-form'), inp=document.getElementById('p4s-in');
-  var MAIN=['Which program is right for me?','Prices','Free workout','How does it work?','Is it for my sport?','Talk to a coach'];
+  var MAIN=['Which program is right for me?','Prices','Free workout','How does it work?','Is it for my sport?','Payments & refunds','Talk to a coach'];
   function goTo(hash){var a=document.querySelector('a[href="'+hash+'"]'); box.classList.remove('open'); if(a){a.click()} else {location.hash=hash}}
   window.p4sGo=goTo;
   var A={
     programs:"We have 4 plans, all written for your sport after a short intake:\n\n\u2022 Jumpstart: 3 weeks, $30. Best if a big game or meet is under a month away.\n\u2022 5-Week Builder: $49. Our most popular, for most athletes.\n\u2022 Full Speed: 7 weeks, $65. The full progression with weekly check-ins.\n\u2022 4-Week Plyo Power: $25. Jump higher and get more explosive. Runs alongside any speed plan.\n\nNot sure? <a href=\"#finder\" onclick=\"p4sGo('#finder');return false\">Take the 30-second quiz</a>.",
-    prices:"\u2022 Jumpstart (3 weeks): $30\n\u2022 5-Week Builder: $49\n\u2022 Full Speed (7 weeks): $65\n\u2022 4-Week Plyo Power: $25\n\u2022 Film review: $10 per clip\n\nYou can upgrade to a longer plan later and only pay the difference.",
+    prices:"\u2022 Jumpstart (3 weeks): $30\n\u2022 5-Week Builder: $49\n\u2022 Full Speed (7 weeks): $65\n\u2022 4-Week Plyo Power: $25\n\u2022 Film review: $10 per clip, or 3 clips for $20\n\nReady to buy? Tap <b>Pay</b> at the top of the page. You can upgrade to a longer plan later and only pay the difference.",
     free:"Yes! Answer a few quick questions and you get one workout written for your sport and position, free. Takes about 30 seconds.\n\n<a href=\"#sample-day\" onclick=\"p4sGo('#sample-day');return false\">Build my free workout</a>",
-    how:"1. Pick a program\n2. Fill out the <a href=\""+FORM+"\" target=\"_blank\" rel=\"noopener\">intake form</a> (about 3 minutes: your sport, position, schedule and any injuries)\n3. We confirm your plan and payment options with you\n4. Your custom plan arrives within 48 hours\n\nThe program is fully typed out, day by day, and you can text us questions any time during the weeks.",
+    how:"1. Pick a program\n2. Fill out the <a href=\""+FORM+"\" target=\"_blank\" rel=\"noopener\">intake form</a> (about 3 minutes: your sport, position, schedule and any injuries)\n3. Pay securely through the <a href=\"#pay\" onclick=\"p4sGo('#pay');return false\">Pay button</a> at the top of the page\n4. Your custom plan arrives within 48 hours\n\nThe program is fully typed out, day by day, and you can text us questions any time during the weeks.",
     sport:"Yes. We train athletes in every sport: football, basketball, soccer, volleyball, baseball, softball, lacrosse, track and more. Your plan is built around your sport, your position and your season, so it fits around team practice.",
     gym:"No gym needed. Every session has a version you can do on a track, a field, or at home with a few cones (shoes or water bottles work too).",
-    pay:"After you fill out the intake form, we reach out to confirm your plan and go over payment options with you directly. Nothing is charged online.",
+    pay:"You can pay right here on the site. Tap <b>Pay</b> at the top of the page (or <a href=\"#pay\" onclick=\"p4sGo('#pay');return false\">open payments</a>), pick your program and check out securely through Stripe.\n\nBest order: fill out the <a href=\""+FORM+"\" target=\"_blank\" rel=\"noopener\">intake form</a> first, then pay. Your plan is ready within 48 hours of your intake form.",
+    methods:"Checkout is through Stripe, so you can use any major credit or debit card, Apple Pay, Google Pay, and the other options shown at checkout. Depending on your card, you may also see a pay-later option.\n\nWant to pay another way? Text "+PHONE+".",
+    refund:"All sales are final, so we don't offer refunds. Every program is written from scratch for your athlete as soon as your intake form comes in.\n\nNot sure which plan fits? Ask before you buy: text "+PHONE+" or <a href=\"#finder\" onclick=\"p4sGo('#finder');return false\">take the 30-second quiz</a>. And if something comes up during the program, like an injury or a schedule change, text us and we'll help you adjust it.",
+    secure:"Yes. Payments go through Stripe, one of the biggest payment companies in the world. Your card details go straight to Stripe, and we never see or store your card number.",
+    receipt:"Stripe emails you a receipt right after you pay. If you don't see it, check your spam folder or text "+PHONE+" and we'll confirm your payment.",
+    declined:"If your payment doesn't go through, double-check your card details or try another card or Apple Pay. Still stuck? Text "+PHONE+" and we'll sort it out.",
+    discount:"We don't have promo codes. Our programs are already priced low for fully custom plans. For film, the bundle is the best deal: 3 clips for $20 instead of $10 each.",
+    whopay:"Parents can pay. Just type the athlete's name in the \"Athlete name\" box at checkout so we know who the program is for.",
+    order:"Fill out the <a href=\""+FORM+"\" target=\"_blank\" rel=\"noopener\">intake form</a> first, then pay. Already paid? No problem, just fill out the form. Your plan is ready within 48 hours of the form coming in.",
     format:"Your program is fully typed out, day by day: every exercise, sets, reps, rest and coaching cues, plus progress tests at the start and end. It's not a video course. If you have questions during the weeks, text us at "+PHONE+".",
     time:"Your custom plan is ready within 48 hours of your intake form coming in.",
-    film:"Send your clips and get them broken down: $10 per video, with a discount when you send multiple clips. Film from the side at hip height if you can. Email them to <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a> or DM us on Instagram.",
+    film:"Send your clips and get them broken down: $10 per clip, or 3 clips for $20. Pay through the <a href=\"#pay\" onclick=\"p4sGo('#pay');return false\">Pay button</a>, then text your clips to "+PHONE+", email them to <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a> or DM us on Instagram. Film from the side at hip height if you can.",
     person:"We offer limited in-person sessions on weekends in Tampa, FL. Text "+PHONE+" or DM <a href=\"https://www.instagram.com/programmed4speed/\" target=\"_blank\" rel=\"noopener\">@programmed4speed</a> to ask about times.",
     combine:"Yes. Plyo Power runs alongside any speed program, and your plan is adjusted so your total training load stays right. You can also upgrade to a longer plan later and pay only the difference.",
     age:"Our plans are built for youth and high school athletes (and older). Put your age and grade on the intake form so the workload fits you.",
@@ -1386,8 +1394,16 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
     contact:"Happy to help! Text or call <b>"+PHONE+"</b>, email <a href=\"mailto:"+EMAIL+"\">"+EMAIL+"</a>, or DM <a href=\"https://www.instagram.com/programmed4speed/\" target=\"_blank\" rel=\"noopener\">@programmed4speed</a>. We get back to you within 24 hours."
   };
   var RULES=[
-    [/(price|cost|how much|\$|expensive|cheap|pay for)/i,'prices'],
-    [/(pay|payment|venmo|card|cash|zelle|paypal)/i,'pay'],
+    [/(refund|money back|cancel|return policy|all sales)/i,'refund'],
+    [/(receipt|invoice|confirmation email)/i,'receipt'],
+    [/(secure|legit|scam|safe to pay|card info|card details)/i,'secure'],
+    [/(declin|didn.?t go through|did not go through|failed|won.?t go through)/i,'declined'],
+    [/(discount|coupon|promo|deal)/i,'discount'],
+    [/(apple pay|google pay|credit|debit|card|venmo|zelle|cash ?app|cash|paypal|klarna|installment|pay later|payment plan|method)/i,'methods'],
+    [/(already paid|paid already|pay first|form first|before or after)/i,'order'],
+    [/((parent|mom|dad).*pay|pay.*(parent|mom|dad|son|daughter|kid|child))/i,'whopay'],
+    [/(price|cost|how much|\$|expensive|cheap)/i,'prices'],
+    [/(pay|payment|checkout|check out|buy|purchase)/i,'pay'],
     [/(free|sample|trial|try)/i,'free'],
     [/(which|best|recommend|right for|should i|pick|choose|program|plan)/i,'programs'],
     [/(how (does|do) (it|this) work|process|steps|get started|start|sign ?up|intake)/i,'how'],
@@ -1404,7 +1420,7 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
     [/(football|basketball|soccer|volleyball|baseball|softball|lacrosse|track|tennis|hockey|wrestl|rugby|sport|position)/i,'sport'],
     [/(contact|phone|text|call|email|talk|human|person|question)/i,'contact']
   ];
-  var CHIP={'Which program is right for me?':'programs','Prices':'prices','Free workout':'free','How does it work?':'how','Is it for my sport?':'sport','Talk to a coach':'contact'};
+  var CHIP={'Which program is right for me?':'programs','Prices':'prices','Free workout':'free','How does it work?':'how','Is it for my sport?':'sport','Payments & refunds':'pay','Talk to a coach':'contact'};
   function add(html,who){var d=document.createElement('div');d.className='p4s-m '+who;if(who==='me'){d.textContent=html}else{d.innerHTML=html}log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
   function chips(list){var w=document.createElement('div');w.className='p4s-chips';list.forEach(function(l){var b=document.createElement('button');b.type='button';b.textContent=l;b.onclick=function(){w.remove();ask(l,CHIP[l])};w.appendChild(b)});log.appendChild(w);log.scrollTop=log.scrollHeight}
   function reply(key){setTimeout(function(){add(A[key],'bot');var rest=MAIN.filter(function(l){return CHIP[l]!==key}).slice(0,4);chips(rest)},350)}
