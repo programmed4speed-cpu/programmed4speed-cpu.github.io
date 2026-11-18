@@ -389,6 +389,9 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
 .sport:hover .sport-go,.sport:focus-visible .sport-go{opacity:1;transform:none}
 .sport:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 @media (hover:none){.sport .sport-cap{transform:translateY(-22px)}.sport-go{opacity:1;transform:none}}
+.navcta .ns{display:none}
+@media (max-width:480px){.lane .wrap{gap:6px}.track{display:none}.mark{font-size:12px;margin-right:auto}.navpay,.navcta,.navcontact{font-size:10px;letter-spacing:.04em;padding:7px 8px;margin:0}.navcta .nl{display:none}.navcta .ns{display:inline}}
+@media (max-width:340px){.mark{font-size:10.5px}.navpay,.navcta,.navcontact{padding:6px 6px;font-size:9.5px}}
 </style>
 
 <style>
@@ -423,7 +426,7 @@ a.sport{display:block;color:inherit;text-decoration:none;cursor:pointer}
       <div class="ticks"><span>0m</span><span>10m</span><span>30m</span><span>60m</span><span>100m</span></div>
     </div>
     <a class="navpay" href="#pay" data-pay>Pay</a>
-    <a class="navcta" href="#finder" data-finder>Get started</a>
+    <a class="navcta" href="#finder" data-finder><span class="nl">Get started</span><span class="ns">Start</span></a>
     <a class="navcontact" href="#contact" data-contact>Contact</a>
   </div>
 </header>
